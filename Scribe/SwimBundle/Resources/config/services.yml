@@ -1,9 +1,0 @@
-parameters:
-	scribe.parser.swim.class: Scribe\SwimBundle\Component\Parser\Swim
-
-services:
-	parser.swim:
-        class: %scribe.parser.swim.class%
-        arguments: [ "@service_container" ]
-        tags:
-            - { name: parser.swim, alias: swim }
