@@ -1,4 +1,3 @@
-SwimBundle
-==========
+# ScribeSwimBundle
 
-Scribe Simple Wiki Markup for Symfony
+Scribe Simple Wiki Markup bundle for Symfony
