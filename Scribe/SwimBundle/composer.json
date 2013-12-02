@@ -1,6 +1,6 @@
 {
     "name": "scribe/swim-bundle",
-    "description": "Simple and extendable parser library for markdown and more...",
+    "description": "Simple and extendable parser library for markdown, Swim, and more...",
     "keywords": ["Symfony2", "Swim"],
     "type": "symfony-bundle",
     "homepage": "https://github.com/scribenet/ScribeSwimBundle",
