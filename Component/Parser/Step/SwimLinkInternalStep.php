@@ -26,7 +26,7 @@ class SwimLinkInternalStep extends SwimAbstractStep implements SwimInterface, Co
      */
     public function render($work = null)
     {
-        $pattern = '#{~a-internal:([^ ]*?)( (.*?))?}#i';
+        $pattern = '#{~a-in:([^ ]*?)( (.*?))?}#i';
         $matches = [];
         @preg_match_all($pattern, $string, $matches);
 
