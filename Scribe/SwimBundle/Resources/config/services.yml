@@ -1,0 +1,16 @@
+parameters:
+    scribe.parser.swim.class:      Scribe\SwimBundle\Component\Parser\SwimParser
+    scribe.parser.swim.twig.class: Scribe\SwimBundle\Templating\Extension\SwimExtension
+
+services:
+    scribe.parser.swim:
+        class: %scribe.parser.swim.class%
+        arguments: [ "@service_container" ]
+        tags:
+            - { name: parser.swim, alias: swim }
+
+    scribe.parser.swim.twig:
+        class:     "%scribe.parser.swim.twig.class%"
+        arguments: [ "@service_container" ]
+        tags:
+            - { name: twig.extension, alias: swim.twig }
