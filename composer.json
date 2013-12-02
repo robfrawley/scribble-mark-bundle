@@ -1,0 +1,28 @@
+{
+    "name": "scribe/swim-bundle",
+    "description": "Simple and extendable parser library for markdown, Swim, and more...",
+    "keywords": ["Symfony2", "Swim"],
+    "type": "symfony-bundle",
+    "homepage": "https://github.com/scribenet/ScribeSwimBundle",
+    "license": "MIT",
+    "authors": [{
+        "name" : "Rob Frawley 2nd",
+        "email" : "rfrawley@scribenet.com",
+        "homepage": "http://www.scribenet.com"
+    }],
+    "require": {
+        "symfony/framework-bundle": ">=2.0",
+        "symfony/monolog-bridge":   ">=2.0",
+        "varspool/pygments-bundle": "*@dev",
+        "kwattro/markdown-bundle":  "*@dev"
+    },
+    "autoload": {
+        "psr-0": { "Scribe\\SwimBundle": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
+    },
+    "target-dir": "Scribe/SwimBundle"
+}
