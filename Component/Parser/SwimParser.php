@@ -13,7 +13,8 @@ namespace Scribe\SwimBundle\Component\Parser;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
 use Scribe\SharedBundle\Utility\Container\ContainerAwareTrait,
-    Scribe\SharedBundle\Utility\Subject\SubjectAbstract;
+    Scribe\SharedBundle\Utility\Subject\SubjectAbstract,
+    Scribe\CacheBundle\Component\Caching\UserlandCacheInterface;
 
 /**
  * SwimParser
@@ -57,13 +58,60 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
     private $config = [];
 
     /**
+     * @var UserlandCacheInterface
+     */
+    private $cache = null;
+
+    /**
+     * @var bool
+     */
+    private $cacheEnabled = true;
+
+    /**
      * @param ContainerInterface $container
      * @param array              $config
      */
-    public function __construct(ContainerInterface $container = null, array $config = null)
+    public function __construct(ContainerInterface $container = null, array $config = null, $cacheEnabled = true)
     {
         $this->__constructContainerAware($container);
         $this->configure($config);
+        
+        $this->setCacheEnabled($cacheEnabled);
+        $this->cacheInit();
+    }
+
+    /**
+     * initialize cache
+     */
+    private function cacheInit()
+    {
+        if ($this->getCacheEnabled() === false) {
+            return;
+        }
+
+        $this->cache = $this
+            ->container
+            ->get('scribe.cache.userland')
+        ;
+    }
+
+    /**
+     * @param  bool $bool
+     * @return $this
+     */
+    public function setCacheEnabled($bool) 
+    {
+        $this->cacheEnabled = (bool)$bool;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCacheEnabled()
+    {
+        return (bool)$this->cacheEnabled;
     }
 
     /**
@@ -73,6 +121,9 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
     public function setOriginal($string = null)
     {
         $this->original = $string;
+        $this->rendered = false;
+        $this->setWork(null);
+        $this->setDone(null);
         
         return $this;
     }
@@ -173,10 +224,68 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
         }
 
         if ($this->rendered === false || $force === true) {
-            $this->notify();
+
+            if ($this->getCache() === false) {
+
+                $this->notify();
+                $this->setCache();
+
+            }
+
             $this->rendered = true;
+            
         }
 
         return $this->getDone();
+    }
+
+    /**
+     * generate a key for the content
+     * @return string
+     */
+    public function getCacheKey()
+    {
+        return md5($this->getOriginal());
+    }
+
+    /**
+     * set cached content
+     */
+    public function setCache()
+    {
+        if ($this->getCacheEnabled() === false || !$this->cache instanceof UserlandCacheInterface) {
+            return;
+        }
+
+        $key = $this->getCacheKey();
+
+        return $this
+            ->cache
+            ->set($key, $this->getDone())
+        ;
+    }
+
+    /**
+     * get cache content
+     */
+    public function getCache()
+    {
+        if ($this->getCacheEnabled() === false || !$this->cache instanceof UserlandCacheInterface) {
+            return false;
+        }
+
+        $key = $this->getCacheKey();
+
+        $cached = $this
+            ->cache
+            ->get($key, null)
+        ;
+
+        if ($cached === null) {
+            return false;
+        }
+
+        $this->setDone($cached);
+        return true;
     }
 }
