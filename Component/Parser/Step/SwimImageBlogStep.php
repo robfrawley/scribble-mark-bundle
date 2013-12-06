@@ -32,17 +32,13 @@ class SwimImageBlogStep extends SwimAbstractStep implements SwimInterface, Conta
             for ($i = 0; $i < count($matches[0]); $i++) {
                 $original    = $matches[0][$i];
                 $image_src   = $matches[1][$i];
-                $thumb_src   = pathinfo($image_src, PATHINFO_DIRNAME) . 
-                               '/' . 
-                               pathinfo($image_src, PATHINFO_FILENAME) . 
-                               't.' . 
-                               pathinfo($image_src, PATHINFO_EXTENSION)
+                $image_title = $matches[2][$i];
+                $replace     = 
+                    '<div class="text-center">'.
+                    '<img src="/static/images/blog/'.$image_src.'" alt="Image: '.$image_title.'">'.
+                    '<p><small class="text-muted">'.$image_title.'</small></p>'.
+                    '</div>'
                 ;
-                $image_title = empty($matches[2][$i]) ? 
-                    $image_src : $matches[2][$i]
-                ;
-                $series_tag  = substr(pathinfo($image_src, PATHINFO_FILENAME), 0, -3);
-                $replace = '<div class="text-center"><img src="/images/blog/'.$image_src.'" alt="'.$image_title.'" /><p><small class="text-muted">'.$image_title.'</small></p></div>';
                 $string = str_replace($original, $replace, $string);
             }
         }
