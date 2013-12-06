@@ -70,6 +70,34 @@ class SwimExtension extends Twig_Extension
         return $swim->render($content);
     }
 
+    public function swimbook($content)
+    {
+        $config = [
+            'Exclude',
+            'Block',
+            'LinkWikipedia', 
+            'LinkExternal',
+            'LinkInternal',
+            'BootstrapColumn',
+            'BootstrapTooltip',
+            'ImageBook', 
+            'Callout',
+            'CharacterStyle', 
+            'Markdown',
+            'BootstrapCollapse',
+            'BootstrapWell',
+            'MarkdownCleanup',
+            'BootstrapTable',
+            'ParagraphLead',
+            'Exclude',
+        ];
+
+        $swim = $this->container->get('scribe.parser.swim');
+        $swim->configure($config, true);
+
+        return $swim->render($content);
+    }
+
     /**
      * @return array
      */
@@ -77,7 +105,8 @@ class SwimExtension extends Twig_Extension
     {
         return [
             new Twig_SimpleFilter('swim', [$this, 'swim'], ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimblog', [$this, 'swimblog'], ['is_safe' => ['html']])
+            new Twig_SimpleFilter('swimblog', [$this, 'swimblog'], ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('swimbook', [$this, 'swimbook'], ['is_safe' => ['html']]),
         ];
     }
 
