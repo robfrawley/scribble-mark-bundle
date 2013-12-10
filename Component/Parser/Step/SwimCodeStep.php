@@ -32,7 +32,7 @@ class SwimCodeStep extends SwimAbstractStep implements SwimInterface, ContainerA
             for ($i = 0; $i < count($matches[0]); $i++) {
 
                 $original = $matches[0][$i];
-                $replace  = '<code><pre>'.htmlentities($matches[1][$i]).'</pre></code>';
+                $replace  = '<code><pre>'.html_entity_decode($matches[1][$i]).'</pre></code>';
 
                 $string = str_replace($original, $replace, $string);
             }
