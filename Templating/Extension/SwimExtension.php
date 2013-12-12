@@ -37,8 +37,28 @@ class SwimExtension extends Twig_Extension
      */
     public function swim($content)
     {
-        $swim = $this->container->get('scribe.parser.swim');
+        $config = [
+            'Exclude',
+            'Block',
+            'LinkWikipedia', 
+            'LinkExternal',
+            'LinkInternal',
+            'BootstrapColumn',
+            'BootstrapTooltip',
+            'Callout',
+            'CharacterStyle', 
+            'Markdown',
+            'BootstrapCollapse',
+            'BootstrapWell',
+            'MarkdownCleanup',
+            'BootstrapTable',
+            'ParagraphLead',
+            'Exclude',
+        ];
 
+        $swim = $this->container->get('scribe.parser.swim');
+        $swim->configure($config, true);
+        
         return $swim->render($content);
     }
 
