@@ -32,37 +32,10 @@ class SwimExtension extends Twig_Extension
     }
 
     /**
-     * @param $content string
-     * @return mixed
+     * @param  $content string
+     * @return string
      */
-    public function swim($content)
-    {
-        $config = [
-            'Exclude',
-            'Block',
-            'LinkWikipedia', 
-            'LinkExternal',
-            'LinkInternal',
-            'BootstrapColumn',
-            'BootstrapTooltip',
-            'Callout',
-            'CharacterStyle', 
-            'Markdown',
-            'BootstrapCollapse',
-            'BootstrapWell',
-            'MarkdownCleanup',
-            'BootstrapTable',
-            'ParagraphLead',
-            'Exclude',
-        ];
-
-        $swim = $this->container->get('scribe.parser.swim');
-        $swim->configure($config, true);
-        
-        return $swim->render($content);
-    }
-
-    public function swimblog($content)
+    public function swimGeneral($content)
     {
         $config = [
             'Exclude',
@@ -90,7 +63,74 @@ class SwimExtension extends Twig_Extension
         return $swim->render($content);
     }
 
-    public function swimbook($content)
+    /**
+     * @param  $content string
+     * @return string
+     */
+    public function swimLearning($content)
+    {
+        $config = [
+            'Exclude',
+            'Block',
+            'LinkWikipedia', 
+            'LinkExternal',
+            'LinkInternal',
+            'BootstrapColumn',
+            'BootstrapTooltip',
+            'Callout',
+            'CharacterStyle', 
+            'Markdown',
+            'BootstrapCollapse',
+            'BootstrapWell',
+            'MarkdownCleanup',
+            'BootstrapTable',
+            'ParagraphLead',
+            'Exclude',
+        ];
+
+        $swim = $this->container->get('scribe.parser.swim');
+        $swim->configure($config, true);
+        
+        return $swim->render($content);
+    }
+
+    /**
+     * @param  $content string
+     * @return string
+     */
+    public function swimBlog($content)
+    {
+        $config = [
+            'Exclude',
+            'Block',
+            'LinkWikipedia', 
+            'LinkExternal',
+            'LinkInternal',
+            'BootstrapColumn',
+            'BootstrapTooltip',
+            'ImageBlog', 
+            'Callout',
+            'CharacterStyle', 
+            'Markdown',
+            'BootstrapCollapse',
+            'BootstrapWell',
+            'MarkdownCleanup',
+            'BootstrapTable',
+            'ParagraphLead',
+            'Exclude',
+        ];
+
+        $swim = $this->container->get('scribe.parser.swim');
+        $swim->configure($config, true);
+
+        return $swim->render($content);
+    }
+
+    /**
+     * @param  $content string
+     * @return string
+     */
+    public function swimBook($content)
     {
         $config = [
             'Exclude',
@@ -124,12 +164,17 @@ class SwimExtension extends Twig_Extension
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('swim', [$this, 'swim'], ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimblog', [$this, 'swimblog'], ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimbook', [$this, 'swimbook'], ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('swim',         [$this, 'swimGeneral'],  ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('swimgeneral',  [$this, 'swimGeneral'],  ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('swimlearning', [$this, 'swimLearning'], ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('swimblog',     [$this, 'swimBlog'],     ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('swimbook',     [$this, 'swimBook'],     ['is_safe' => ['html']]),
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return __CLASS__;

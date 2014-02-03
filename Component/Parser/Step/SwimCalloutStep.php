@@ -30,7 +30,44 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
             ->get('varspool_markdown')
         ;
 
+        $matched = [];
         @preg_match_all('#{~\?:(.*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<div class="callout callout-warning callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
+        $matched = [];
+        @preg_match_all('#{~\!:(.*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<div class="callout callout-danger callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
+        $matched = [];
+        @preg_match_all('#{~\-:(.*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<div class="callout callout-info callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
+        $matched = [];
+        @preg_match_all('#{~\+:(.*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<div class="callout callout-success callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
+        $matched = [];
+        @preg_match_all('#{~\??:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
                 $replace = '<div class="callout callout-warning"><p class="callout-header">Note</p>'.$renderer->render($matches[1][$i]).'</div>';
@@ -38,7 +75,8 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
             }
         }
 
-        @preg_match_all('#{~\!:(.*)}#i', $string, $matches);
+        $matched = [];
+        @preg_match_all('#{~\!!:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
                 $replace = '<div class="callout callout-danger"><p class="callout-header">Key Point</p>'.$renderer->render($matches[1][$i]).'</div>';
@@ -46,10 +84,20 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
             }
         }
 
-        @preg_match_all('#{~\-:(.*)}#i', $string, $matches);
+        $matched = [];
+        @preg_match_all('#{~\-\-:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
                 $replace = '<div class="callout callout-info"><p class="callout-header">Tip</p>'.$renderer->render($matches[1][$i]).'</div>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
+        $matched = [];
+        @preg_match_all('#{~\+\+:(.*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<div class="callout callout-success"><p class="callout-header">Success</p>'.$renderer->render($matches[1][$i]).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
