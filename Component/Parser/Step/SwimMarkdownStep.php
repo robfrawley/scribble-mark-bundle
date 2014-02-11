@@ -13,6 +13,7 @@ namespace Scribe\SwimBundle\Component\Parser\Step;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Scribe\SwimBundle\Component\Parser\SwimInterface,
     Scribe\SwimBundle\Component\Parser\SwimAbstractStep;
+use \Sundown;
 
 /**
  * Class SwimParserMarkdown
@@ -25,10 +26,6 @@ class SwimMarkdownStep extends SwimAbstractStep implements SwimInterface, Contai
      */
     public function render($string = null)
     {
-        return $this
-            ->getContainer()
-            ->get('varspool_markdown')
-            ->render($string, ['lax_html_blocks' => true], ['xhtml' => false], 'html')
-        ;
+        return (new Sundown($string))->toHtml();
     }
 }

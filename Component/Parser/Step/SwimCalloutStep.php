@@ -13,6 +13,7 @@ namespace Scribe\SwimBundle\Component\Parser\Step;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Scribe\SwimBundle\Component\Parser\SwimInterface,
     Scribe\SwimBundle\Component\Parser\SwimAbstractStep;
+use \Sundown;
 
 /**
  * Class SwimParserQueries
@@ -25,16 +26,11 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
      */
     public function render($string = null)
     {
-        $renderer = $this
-            ->getContainer()
-            ->get('varspool_markdown')
-        ;
-
         $matched = [];
         @preg_match_all('#{~\?:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-warning callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-warning callout-no-header">'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -43,7 +39,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         @preg_match_all('#{~\!:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-danger callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-danger callout-no-header">'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -52,7 +48,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         @preg_match_all('#{~\-:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-info callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-info callout-no-header">'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -61,7 +57,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         @preg_match_all('#{~\+:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-success callout-no-header">'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-success callout-no-header">'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -70,7 +66,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         @preg_match_all('#{~\??:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-warning"><p class="callout-header">Note</p>'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-warning"><p class="callout-header">Note</p>'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -79,7 +75,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         @preg_match_all('#{~\!!:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-danger"><p class="callout-header">Key Point</p>'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-danger"><p class="callout-header">Key Point</p>'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -88,7 +84,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         @preg_match_all('#{~\-\-:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-info"><p class="callout-header">Tip</p>'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-info"><p class="callout-header">Tip</p>'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -97,7 +93,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         @preg_match_all('#{~\+\+:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<div class="callout callout-success"><p class="callout-header">Success</p>'.$renderer->render($matches[1][$i]).'</div>';
+                $replace = '<div class="callout callout-success"><p class="callout-header">Success</p>'.((new Sundown($matches[1][$i]))->toHtml()).'</div>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
