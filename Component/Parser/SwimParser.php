@@ -71,7 +71,7 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
      * @param ContainerInterface $container
      * @param array              $config
      */
-    public function __construct(ContainerInterface $container = null, array $config = null, $cacheEnabled = true)
+    public function __construct(ContainerInterface $container = null, array $config = null, $cacheEnabled = false)
     {
         $this->__constructContainerAware($container);
         $this->configure($config);
