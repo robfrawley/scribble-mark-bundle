@@ -75,12 +75,10 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
 		return [$string, ''];
 	}
 
-        $tocHtml = '<div id="node-toc" class="node-toc panel panel-default">
-                    <div data-toggle="collapse" data-target="#toc-collapse" class="panel-heading" data-target=".node-toc-l1">
-                        <i class="icon-reorder icon-fixed-width"></i> Contents
-                        <span class="pull-right"></span>
-                    </div>'.
-                   '<div id="toc-collapse-off"><ul class="node-toc-l1">';
+        $tocHtml = '<div class="sidebar-affix affix">
+                    <div class="node-toc panel public-panel">
+                    <div class="panel-heading"><h3 class="panel-title">Contents</h3></div>'.
+                   '<ul class="list-group">';
         //print_r($level1);
         //print_r($level2);
         $j = 0;
@@ -89,7 +87,7 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
             $l1k = array_keys($level1[$i])[0];
             $l1v = array_values($level1[$i])[0];
 
-            $tocHtml .= '<li><a href="#'.$l1k.'">';
+            $tocHtml .= '<li class="public-services-list-group-item"><a href="#'.$l1k.'">';
 
             $lv1Matches = [];
             @preg_match_all('#<span.*?>\s?</span>\s?#i', $l1v, $lv1Matches);
@@ -123,7 +121,7 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
         }
         $tocHtml .= '</ul></div></div>';
         
-        if ($j > 18) {
+        /*if ($j > 18) {
             $tocHtml = str_ireplace(
                 'id="toc-collapse-off"', 
                 'id="toc-collapse" class="collapse collapse-large in"', 
@@ -145,7 +143,7 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
                 '<span class="pull-right mute">Click to show/hide contents</span>', 
                 $tocHtml
             );
-        }
+        }*/
 
         $levels = [
             $level1,
@@ -170,8 +168,8 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
         $withToc = '<div class="nodeToc">'.$levels.'</div>'.
                    '<div class="nodeContent">'.$content.'</div>';
 
-        $subject->setWork($withToc);
-        //$subject->setOther('toc', $levels);
+        $subject->setWork($content);
+        $subject->setAttr('toc', $levels);
 
         return $this;
     }

@@ -26,10 +26,12 @@ class SwimParagraphStyleStep extends SwimAbstractStep implements SwimInterface, 
      */
     public function render($string = null)
     {
+        $markdown = $this->getContainer()->get('kwattro_markdown');
+
         @preg_match_all('#<\s(.*)#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<blockquote class="pullquote">'.((new Sundown($matches[1][$i]))->toHtml()).'</blockquote>';
+                $replace = '<blockquote class="pullquote">'.$markdown->render($matches[1][$i]).'</blockquote>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }

@@ -26,6 +26,8 @@ class SwimParagraphLeadStep extends SwimAbstractStep implements SwimInterface, C
      */
     public function render($string = null)
     {
+        $markdown = $this->getContainer()->get('kwattro_markdown');
+
         @preg_match_all('#<([^>])>\*\*\*\*(.*)</(\1)>#i', $string, $matches);
         if (0 < count($matches)) {
             for ($i = 0; $i < count($matches[0]); $i++) {

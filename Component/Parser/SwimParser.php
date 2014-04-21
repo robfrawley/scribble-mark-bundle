@@ -43,6 +43,11 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
     private $done = null;
 
     /**
+     * @var array
+     */
+    private $attr = [];
+
+    /**
      * @var bool
      */
     private $rendered = false;
@@ -112,6 +117,31 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
     public function getCacheEnabled()
     {
         return (bool)$this->cacheEnabled;
+    }
+
+    /**
+     * @param  string $key
+     * @return mixed
+     */
+    public function getAttr($key)
+    {
+        if (array_key_exists($key, $this->attr)) {
+            return $this->attr[$key];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param  string $key
+     * @param  mixed  $value
+     * @return $this
+     */
+    public function setAttr($key, $value)
+    {
+        $this->attr[(string) $key] = $value;
+
+        return $this;
     }
 
     /**

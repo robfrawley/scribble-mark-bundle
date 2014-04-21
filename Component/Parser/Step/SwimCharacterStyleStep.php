@@ -26,10 +26,12 @@ class SwimCharacterStyleStep extends SwimAbstractStep implements SwimInterface, 
      */
     public function render($string = null)
     {
+        $markdown = $this->getContainer()->get('kwattro_markdown');
+        
         @preg_match_all('#{~sm:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<small class="text-muted">'.((new Sundown($matches[1][$i]))->toHtml()).'</small>';
+                $replace = '<small class="text-muted">'.$markdown->render($matches[1][$i]).'</small>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }

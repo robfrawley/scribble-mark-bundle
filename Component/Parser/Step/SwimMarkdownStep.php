@@ -26,6 +26,8 @@ class SwimMarkdownStep extends SwimAbstractStep implements SwimInterface, Contai
      */
     public function render($string = null)
     {
-        return (new Sundown($string))->toHtml();
+    	$markdown = $this->getContainer()->get('kwattro_markdown');
+        
+        return $markdown->render($string);
     }
 }
