@@ -98,7 +98,7 @@ class SwimBootstrapCollapseStep extends SwimAbstractStep implements SwimInterfac
                 $original = $matches[0][$i];
                 $title    = $matches[1][$i];
                 $target   = String::alphanumericOnly($matches[1][$i]);
-                $replace = '<span class="collapsable-toggle collapsed" data-toggle="collapse" data-target="#T_'.$target.'"><span class="icon-for-open icon-chevron-sign-up icon-fixed-width"> </span><span class="icon-for-closed icon-chevron-sign-down icon-fixed-width"> </span>'.$title.'</span>';
+                $replace = '<span class="collapsable-toggle collapsed" data-toggle="collapse" data-target="#T_'.$target.'">'.$title.'</span>';
                 $string = str_replace($original, $replace, $string);
             }
         }

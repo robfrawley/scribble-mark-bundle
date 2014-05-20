@@ -16,161 +16,201 @@ use Scribe\SwimBundle\Component\Parser\SwimInterface,
 use SplSubject;
 
 /**
- * Class SwimParserToc
+ * Class SwimTocStep
  */
 class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAwareInterface
 {
     /**
-     * @var string
-     */
-    private $toc = '';
-
-    /**
+     * render function called on all SwimSteps
+     * 
      * @param null $string
      * @return mixed|null
      */
     public function render($string = null)
     {
-        $level1   = [];
-        $level2   = [];
-        $level3   = [];
-        $loop     = 0;
-        $currentH = 0;
-        $topH     = 1;
-        $innerI   = 0;
+        list($string, $toc) = $this->buildToc($string);
 
-        $pattern = '#<h(?<h>[0-9])>(.*?)</h\k<h>>#i';
-        preg_match_all($pattern, $string, $matches);
-
-        for ($i = 0; $i < count($matches[0]); $i++) {
-            $h = $matches['h'][$i];
-            if ($i === 0) {
-                $topH = $h;
-            }
-            $outer = $matches[0][$i];
-            $inner = $matches[2][$i];
-            if ($currentH > $h || $h == $topH) {
-                $loop++;
-                $innerI = 0;
-            }
-            if($currentH != $h) {
-            }
-            $currentH = $h;
-            $id = 'toc-'.$loop.'-'.$innerI;
-            if ($h == $topH) {
-                $level1[$loop][$id] = $inner;
-            } elseif ($h == ($topH+1)) {
-                $level2[$loop][$id] = $inner;
-            } elseif ($h == ($topH+2)) {
-                $level3[$loop][$id] = $inner;
-            }
-            $innerI++;
-
-            $stringSearch = $outer;
-            $stringReplace = '<h'.$h.' id="'.$id.'" class="fixedfix">'.$inner.' <small class="toc-top" data-toggle="tooltip" title="Back to Top"><a href="#Top"><i class="icon-arrow-up"> </i></a></small></h'.$h.'>';
-            $string = str_replace($stringSearch, $stringReplace, $string);
-        }
-
-	if (!count($level1) > 0 ) {
-		return [$string, ''];
-	}
-
-        $tocHtml = '<div class="sidebar-affix affix">
-                    <div class="node-toc panel public-panel">
-                    <div class="panel-heading"><h3 class="panel-title">Contents</h3></div>'.
-                   '<ul class="list-group">';
-        //print_r($level1);
-        //print_r($level2);
-        $j = 0;
-
-        for( $i = 1; $i <= count($level1); $i++ ) {
-            $l1k = array_keys($level1[$i])[0];
-            $l1v = array_values($level1[$i])[0];
-
-            $tocHtml .= '<li class="public-services-list-group-item"><a href="#'.$l1k.'">';
-
-            $lv1Matches = [];
-            @preg_match_all('#<span.*?>\s?</span>\s?#i', $l1v, $lv1Matches);
-
-            if (count($lv1Matches[0]) > 0) {
-                 $l1v = str_ireplace($lv1Matches[0][0], '', $l1v);
-            }
-
-
-            $tocHtml .= $l1v.'</a>';
-            if (isset($level2[$i]) && is_array($level2[$i])) {
-                $tocHtml .= '<ul class="node-toc-l2">';
-                foreach ($level2[$i] as $l2k => $l2v) {
-                    $lv2Matches = [];
-                    @preg_match_all('#<span.*?>\s?</span>\s?#i', $l2v, $lv2Matches);
-                    //print_r($lv2Matches);
-
-                    if (count($lv2Matches[0]) > 0) {
-                        for ($j=0; $j<sizeof($lv2Matches[0]); $j++) {
-                            $l2v = str_ireplace($lv2Matches[0][$j], '', $l2v);
-                        }
-                    }
-                    $tocHtml .= '<li><a href="#'.$l2k.'">'.$l2v.'</a></li>';
-                    $j++;
-                }
-                $tocHtml .= '</ul>';
-            }
-            $tocHtml .= '</li>';
-
-            $j++;
-        }
-        $tocHtml .= '</ul></div></div>';
-        
-        /*if ($j > 18) {
-            $tocHtml = str_ireplace(
-                'id="toc-collapse-off"', 
-                'id="toc-collapse" class="collapse collapse-large in"', 
-                $tocHtml
-            );
-            $tocHtml = str_ireplace(
-                '<span class="pull-right"></span>', 
-                '<span class="pull-right mute">Click to show/hide contents</span>', 
-                $tocHtml
-            );
-        } else {
-            $tocHtml = str_ireplace(
-                'id="toc-collapse-off"', 
-                'id="toc-collapse" class="collapse in"', 
-                $tocHtml
-            );
-            $tocHtml = str_ireplace(
-                '<span class="pull-right"></span>', 
-                '<span class="pull-right mute">Click to show/hide contents</span>', 
-                $tocHtml
-            );
-        }*/
-
-        $levels = [
-            $level1,
-            $level2
-        ];
-            
         return [
-            $string, 
-            $tocHtml
+            $string,
+            $toc,
         ];
     }
 
     /**
+     * custom update for this step to assign additional attributes
+     * 
      * @param SplSubject $subject
      * @return $this
      */
     public function update(SplSubject $subject)
     {
-        $content = $subject->getWork();
-        list($content, $levels) = @$this->render($content);
+        list($content, $toc) = $this->render($subject->getWork());
         
-        $withToc = '<div class="nodeToc">'.$levels.'</div>'.
-                   '<div class="nodeContent">'.$content.'</div>';
-
         $subject->setWork($content);
-        $subject->setAttr('toc', $levels);
+        $subject->setAttr('toc', $toc);
 
         return $this;
+    }
+
+    /**
+     * given the page content, build TOC based on headers found
+     * 
+     * @param  string $content
+     * @return string
+     */
+    private function buildToc($content)
+    {
+        $pattern = '#<h(?<h>[0-9])>(.*?)</h\k<h>>#i';
+        preg_match_all($pattern, $content, $matches);
+        
+        $toc_heads          = $this->getTocStructredData($matches);
+        $toc_head_first_key = $this->getTocFirstKey($toc_heads);
+
+        foreach (range(1, 10) as $i) {
+            $lowest = $this->getTocLowest($toc_heads);
+            $this->structureTocByLowest($toc_heads, $toc_head_first_key, $lowest);
+        }
+
+        $toc_heads = $this->resetTocArrayKeys($toc_heads);
+
+        return [
+            $this->addContentHeaderAnchors($toc_heads, $content),
+            $this->getTocHtml($toc_heads)
+        ];
+    }
+
+    /**
+     * structure the matched values into sensible format
+     * 
+     * @param  array $preg_matches
+     * @return array
+     */
+    private function getTocStructredData(array $preg_matches)
+    {
+        $array = [];
+
+        for ($i = 0; $i < count($preg_matches[0]); $i++) {
+            $array[] = [
+                'text'  => $preg_matches[2][$i],
+                'level' => $preg_matches['h'][$i],
+                'subs'  => [],
+            ];
+        }
+
+        return $array;
+    }
+
+    /**
+     * get the lowest toc level in top-level head array
+     * 
+     * @param  array $toc_heads
+     * @return int
+     */
+    private function getTocLowest(array $toc_heads)
+    {
+        $levels = array_map(function($item) {
+            return $item['level'];
+        }, $toc_heads);
+
+        sort($levels, SORT_NUMERIC);
+
+        return (int) array_pop($levels);
+    }
+
+    /**
+     * get the first toc element key
+     * 
+     * @param  array $toc_heads
+     * @return int
+     */
+    private function getTocFirstKey(array $toc_heads)
+    {
+        reset($toc_heads);
+        return key($toc_heads);
+    }
+
+    /**
+     * structure the data based on the level
+     * 
+     * @param  array $toc_heads          assigned by reference
+     * @param  int   $toc_head_first_key
+     * @param  int   $lowest
+     * @return void
+     */
+    private function structureTocByLowest(array &$toc_heads, $toc_head_first_key, $lowest)
+    {
+        $toc_head_previous_key = $toc_head_first_key;
+        $toc_head_remove_list  = [];
+
+        foreach ($toc_heads as $index => $value) {
+            if ($index == $toc_head_first_key) { continue; }
+            if ($value['level'] < $lowest) { $toc_head_previous_key = $index; }
+            if ($value['level'] == $toc_heads[$toc_head_previous_key]['level']) { continue; }
+            if ($value['level'] != $lowest) { continue; }
+
+            $toc_heads[$toc_head_previous_key]['subs'][] = $value;
+            $toc_head_remove_list[]                      = $index;
+        }
+
+        foreach ($toc_head_remove_list as $index) {
+            unset($toc_heads[$index]);
+        }
+    }
+
+    /**
+     * reset array keys
+     * 
+     * @param  array $toc_heads
+     * @return array
+     */
+    private function resetTocArrayKeys(array $toc_heads)
+    {
+        return array_values($toc_heads);
+    }
+
+    /**
+     * generate the toc html using twig template engine
+     * 
+     * @param  array $toc_heads
+     * @return string
+     */
+    private function getTocHtml(array $toc_heads)
+    {
+        $engine = $this
+            ->getContainer()
+            ->get('templating')
+        ;
+
+        return $engine->render(
+            'ScribeSwimBundle:Toc:contents.html.twig',
+            [
+                'toc_heads' => $toc_heads
+            ]
+        );
+    }
+
+    /**
+     * add id anchors to headers for toc to reference
+     * 
+     * @param  array  $toc_heads
+     * @param  string $content
+     * @return string
+     */
+    private function addContentHeaderAnchors(array $toc_heads, $content, $prev = null)
+    {
+        foreach ($toc_heads as $index => $head) {
+            if ($prev === null) { $prev = ''; }
+
+            $search  = '<h'.$head['level'].'>'.$head['text'].'</h'.$head['level'].'>';
+            $replace = '<h'.$head['level'].' id="toc_'.$prev.$index.'">'.$head['text'].'</h'.$head['level'].'>';
+
+            $content = str_replace($search, $replace, $content);
+
+            if (count($head['subs']) > 0) {
+                $content = $this->addContentHeaderAnchors($head['subs'], $content, $prev.$index);
+            }
+        }
+
+        return $content;
     }
 }
