@@ -27,6 +27,28 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
         ContainerAwareTrait::__construct as __constructContainerAware;
     }
 
+    public $STD_CONFIG = [
+        'Exclude',
+        'Block',
+        'LinkWikipedia', 
+        'LinkExternal',
+        'LinkInternal',
+        'BootstrapColumn',
+        'BootstrapTooltip',
+        'ImageBlog', 
+        'Callout',
+        'CharacterStyle',
+        'ParagraphStyle',
+        'Markdown',
+        'BootstrapCollapse',
+        'BootstrapWell',
+        'MarkdownCleanup',
+        'BootstrapTableLook',
+        'BootstrapTableFeel',
+        'ParagraphLead',
+        'Exclude',
+    ];
+
     /**
      * @var string
      */
