@@ -28,11 +28,12 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
      */
     public function render($string = null)
     {
-        list($string, $toc) = $this->buildToc($string);
+        list($string, $toc_html, $toc_levels) = $this->buildToc($string);
 
         return [
             $string,
-            $toc,
+            $toc_html,
+            $toc_levels,
         ];
     }
 
@@ -44,10 +45,11 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
      */
     public function update(SplSubject $subject)
     {
-        list($content, $toc) = $this->render($subject->getWork());
+        list($content, $toc_html, $toc_levels) = $this->render($subject->getWork());
         
         $subject->setWork($content);
-        $subject->setAttr('toc', $toc);
+        $subject->setAttr('toc_html', $toc_html);
+        $subject->setAttr('toc_levels', $toc_levels);
 
         return $this;
     }
@@ -75,7 +77,8 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
 
         return [
             $this->addContentHeaderAnchors($toc_heads, $content),
-            $this->getTocHtml($toc_heads)
+            $this->getTocHtml($toc_heads),
+            $toc_heads,
         ];
     }
 

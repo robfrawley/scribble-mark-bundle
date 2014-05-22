@@ -167,6 +167,19 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
     }
 
     /**
+     * @param  string $key
+     * @return boolean
+     */
+    public function hasAttr($key)
+    {
+        if (array_key_exists($key, $this->attr)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param  null|string $string
      * @return $this
      */

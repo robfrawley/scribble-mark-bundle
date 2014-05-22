@@ -1,0 +1,14 @@
+<div class="node-index panel public-panel">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<a data-toggle="collapse" data-target="#index">
+	          	Index <small>Click to show/hide</small>
+	        </a>
+		</h3>
+	</div>
+	<div id="index" class="panel-collapse collapse">
+		<div class="panel-content">
+			{% include 'ScribeSwimBundle:Index:list.html.twig' with {'toc_heads': toc_heads, 'prev': null} only %}
+		</div>
+	</div>
+</div>
