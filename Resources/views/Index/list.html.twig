@@ -1,7 +1,7 @@
 <ul class="{% if prev is null %}list-group{% endif %}">
 	{% for index, item in toc_heads %}
 		<li class="{% if prev is null %}public-services-list-group-item{% endif %}">
-			<a href="#toc_{% if prev is not null %}{{ prev }}{% endif %}{{ index }}">{{ item['text']|raw }}</a>
+			<a href="#{{ item['id'] }}">{{ item['text']|raw }}</a>
 			{% if item['subs']|length > 0 %}
 				{% include 'ScribeSwimBundle:Toc:list.html.twig' with {'toc_heads': item['subs'], prev: prev ~ index} only %} 
 			{% endif %}

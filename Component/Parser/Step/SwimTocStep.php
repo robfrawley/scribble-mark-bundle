@@ -96,6 +96,7 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
             $array[] = [
                 'text'  => $preg_matches[2][$i],
                 'level' => $preg_matches['h'][$i],
+                'id'    => 'anchor-'.strtolower(preg_replace('#[^a-z0-9]#i', '', $preg_matches[2][$i])),
                 'subs'  => [],
             ];
         }
@@ -205,7 +206,7 @@ class SwimTocStep extends SwimAbstractStep implements SwimInterface, ContainerAw
             if ($prev === null) { $prev = ''; }
 
             $search  = '<h'.$head['level'].'>'.$head['text'].'</h'.$head['level'].'>';
-            $replace = '<h'.$head['level'].' id="toc_'.$prev.$index.'">'.$head['text'].'</h'.$head['level'].'>';
+            $replace = '<h'.$head['level'].' id="'.$head['id'].'">'.$head['text'].'</h'.$head['level'].'>';
 
             $content = str_replace($search, $replace, $content);
 
