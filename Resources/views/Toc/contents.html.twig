@@ -1,8 +1,7 @@
 <div class="sidebar-affix affix">
-	<div class="node-toc panel public-panel">
-    	<div class="panel-heading">
-    		<h3 class="panel-title">Contents</h3>
-    	</div>
-    	{% include 'ScribeSwimBundle:Toc:list.html.twig' with {'toc_heads': toc_heads, 'prev': null} only %}
+	<div class="node-toc">
+    	<div id="scr-toc" class="panel-content src-toc">
+	    	{% include 'ScribeSwimBundle:Toc:list.html.twig' with {'toc_heads': toc_heads, 'prev': null} only %}
+	    </div>
     </div>
-</div>                 
+</div>
