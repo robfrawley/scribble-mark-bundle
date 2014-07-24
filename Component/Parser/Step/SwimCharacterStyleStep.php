@@ -36,6 +36,22 @@ class SwimCharacterStyleStep extends SwimAbstractStep implements SwimInterface, 
             }
         }
 
+        @preg_match_all('#{~scml:([^}]*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<span class="scml">'.$matches[1][$i].'</span>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
+        @preg_match_all('#{~app-menu:([^}]*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<span class="app-menu">'.$matches[1][$i].'</span>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
         return $string;
     }
 }
