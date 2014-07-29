@@ -65,7 +65,7 @@ class SwimCalloutStep extends SwimAbstractStep implements SwimInterface, Contain
         }
 
         $matched = [];
-        @preg_match_all('#{~\??:(.*)}#i', $string, $matches);
+        @preg_match_all('#{~\?\?:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
                 $replace = '<div class="callout callout-warning"><p class="callout-header">Note</p>'.$markdown->render($matches[1][$i]).'</div>';
