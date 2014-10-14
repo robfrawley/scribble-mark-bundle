@@ -12,30 +12,28 @@ namespace Scribe\SwimBundle\Component\Parser;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
-use Scribe\SharedBundle\Utility\Container\ContainerAwareTrait,
+use Scribe\SharedBundle\DependencyInjection\Traits\ContainerAwareTrait,
     Scribe\SharedBundle\Utility\Subject\SubjectAbstract,
     Scribe\CacheBundle\Component\Caching\UserlandCacheInterface;
 
 /**
  * SwimParser
- * handles notifying listeners (observers) to handle parse 
+ * handles notifying listeners (observers) to handle parse
  * steps and returning the result
  */
 class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwareInterface
 {
-    use ContainerAwareTrait {
-        ContainerAwareTrait::__construct as __constructContainerAware;
-    }
+    use ContainerAwareTrait;
 
     public $STD_CONFIG = [
         'Exclude',
         'Block',
-        'LinkWikipedia', 
+        'LinkWikipedia',
         'LinkExternal',
         'LinkInternal',
         'BootstrapColumn',
         'BootstrapTooltip',
-        'ImageBlog', 
+        'ImageBlog',
         'Callout',
         'CharacterStyle',
         'ParagraphStyle',
@@ -100,9 +98,9 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
      */
     public function __construct(ContainerInterface $container = null, array $config = null, $cacheEnabled = false)
     {
-        $this->__constructContainerAware($container);
+        $this->setContainer($container);
         $this->configure($config);
-        
+
         $this->setCacheEnabled($cacheEnabled);
         $this->cacheInit();
     }
@@ -126,7 +124,7 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
      * @param  bool $bool
      * @return $this
      */
-    public function setCacheEnabled($bool) 
+    public function setCacheEnabled($bool)
     {
         $this->cacheEnabled = (bool)$bool;
 
@@ -189,7 +187,7 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
         $this->rendered = false;
         $this->setWork(null);
         $this->setDone(null);
-        
+
         return $this;
     }
 
@@ -298,7 +296,7 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
             }
 
             $this->rendered = true;
-            
+
         }
 
         return $this->getDone();

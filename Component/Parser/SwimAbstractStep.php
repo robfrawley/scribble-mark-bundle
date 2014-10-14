@@ -12,7 +12,7 @@ namespace Scribe\SwimBundle\Component\Parser;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
-use Scribe\SharedBundle\Utility\Container\ContainerAwareTrait;
+use Scribe\SharedBundle\DependencyInjection\Traits\ContainerAwareTrait;
 use SplSubject,
     SplObserver;
 
@@ -23,6 +23,15 @@ use SplSubject,
 class SwimAbstractStep implements ContainerAwareInterface, SplObserver
 {
     use ContainerAwareTrait;
+
+    /**
+     * @param ContainerInterface $container
+     * @param array              $config
+     */
+    public function __construct(ContainerInterface $container = null)
+    {
+        $this->setContainer($container);
+    }
 
     /**
      * @param  SplSubject $subject
