@@ -12,7 +12,7 @@ namespace Scribe\SwimBundle\Component\Parser;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
-use Scribe\SharedBundle\DependencyInjection\Traits\ContainerAwareTrait;
+use Scribe\Component\DependencyInjection\ContainerAwareTrait;
 use SplSubject,
     SplObserver;
 

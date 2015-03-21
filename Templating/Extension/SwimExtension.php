@@ -10,8 +10,8 @@
 
 namespace Scribe\SwimBundle\Templating\Extension;
 
-use Scribe\SharedBundle\Templating\Extension\Part\SimpleExtensionTrait,
-    Scribe\SharedBundle\Templating\Extension\Part\ContainerAwareExtensionTrait;
+use Scribe\MantleBundle\Templating\Extension\Part\SimpleExtensionTrait,
+    Scribe\MantleBundle\Templating\Extension\Part\ContainerAwareExtensionTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig_Extension,
     Twig_SimpleFilter;

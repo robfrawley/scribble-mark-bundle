@@ -13,10 +13,10 @@
     "require": {
         "symfony/framework-bundle" : ">=2.0",
         "symfony/monolog-bridge"   : ">=2.0",
-        "scribe/cache-bundle"      : "~1.0"
+        "scribe/cache-bundle"      : "2.0.*@dev",
+        "scribe/mantle-bundle"     : "2.0.*@dev"
     },
     "autoload": {
         "psr-0": { "Scribe\\SwimBundle": "" }
-    },
-    "target-dir": "Scribe/SwimBundle"
+    }
 }

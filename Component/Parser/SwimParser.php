@@ -12,9 +12,8 @@ namespace Scribe\SwimBundle\Component\Parser;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
-use Scribe\SharedBundle\DependencyInjection\Traits\ContainerAwareTrait,
-    Scribe\SharedBundle\Utility\Subject\SubjectAbstract,
-    Scribe\CacheBundle\Component\Caching\UserlandCacheInterface;
+use Scribe\Component\DependencyInjection\ContainerAwareTrait,
+    Scribe\Utility\Observer\SubjectAbstract;
 
 /**
  * SwimParser
@@ -101,7 +100,7 @@ class SwimParser extends SubjectAbstract implements SwimInterface, ContainerAwar
         $this->setContainer($container);
         $this->configure($config);
 
-        $this->setCacheEnabled($cacheEnabled);
+        $this->setCacheEnabled(false);
         $this->cacheInit();
     }
 

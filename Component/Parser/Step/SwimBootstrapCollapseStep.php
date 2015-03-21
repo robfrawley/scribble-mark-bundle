@@ -11,7 +11,7 @@
 namespace Scribe\SwimBundle\Component\Parser\Step;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Scribe\SharedBundle\Utility\Filters\String,
+use Scribe\Utility\String,
     Scribe\SwimBundle\Component\Parser\SwimInterface,
     Scribe\SwimBundle\Component\Parser\SwimAbstractStep;
 
