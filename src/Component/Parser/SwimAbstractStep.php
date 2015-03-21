@@ -26,7 +26,6 @@ class SwimAbstractStep implements ContainerAwareInterface, SplObserver
 
     /**
      * @param ContainerInterface $container
-     * @param array              $config
      */
     public function __construct(ContainerInterface $container = null)
     {
