@@ -11,12 +11,23 @@
         "homepage": "http://www.scribenet.com"
     }],
     "require": {
+      "php"                        : ">=5.6",
         "symfony/framework-bundle" : ">=2.0",
         "symfony/monolog-bridge"   : ">=2.0",
         "scribe/cache-bundle"      : "2.0.*@dev",
         "scribe/mantle-bundle"     : "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": { "Scribe\\SwimBundle": "" }
+      "psr-4": {"Scribe\\SwimBundle": "src/"}
+    },
+    "config" : {
+        "bin-dir"           : "bin",
+        "preferred-install" : "auto",
+        "minimum-stability" : "dev"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
 }
