@@ -1,6 +1,7 @@
 parameters:
-    scribe.parser.swim.class:      Scribe\SwimBundle\Component\Parser\SwimParser
-    scribe.parser.swim.twig.class: Scribe\SwimBundle\Templating\Extension\SwimExtension
+    scribe.parser.swim.class:                Scribe\SwimBundle\Component\Parser\SwimParser
+    scribe.parser.swim.twig.class:           Scribe\SwimBundle\Templating\Extension\SwimExtension
+    s.swim.node_creator.renderer.swim.class: Scribe\SwimBundle\Templating\Generator\Node\Rendering\NodeRendererSwim
 
 services:
     scribe.parser.swim:
@@ -14,3 +15,11 @@ services:
         arguments: [ "@service_container" ]
         tags:
             - { name: twig.extension, alias: swim.twig }
+
+    s.swim.node_creator.renderer.swim:
+        class: %s.swim.node_creator.renderer.swim.class%
+        arguments:
+            - @scribe.parser.swim
+        tags:
+            - { name: node_creator.renderer, priority: 110 }
+
