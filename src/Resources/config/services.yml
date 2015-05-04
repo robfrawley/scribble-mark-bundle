@@ -21,5 +21,5 @@ services:
         arguments:
             - @scribe.parser.swim
         tags:
-            - { name: node_creator.renderer, priority: 110 }
+            - { name: node_creator.renderer, priority: 1000 }
 

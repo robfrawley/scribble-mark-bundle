@@ -11,7 +11,9 @@
 
 namespace Scribe\SwimBundle\Templating\Generator\Node\Rendering;
 
+use Scribe\MantleBundle\Templating\Generator\Node\Rendering\AbstractNodeRenderer;
 use Scribe\SwimBundle\Component\Parser\SwimParser;
+use Scribe\Utility\ClassInfo;
 
 /**
  * Class NodeRendererSwim.
@@ -77,6 +79,9 @@ class NodeRendererSwim extends AbstractNodeRenderer
      */
     private $nodeIndexLevels;
 
+    /**
+     * @param SwimParser $swim
+     */
     public function __construct(SwimParser $swim)
     {
         $this->swim = $swim;
@@ -86,7 +91,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Gets the value of swim
      *
-     * @return swim
+     * @return SwimParser
      */
     public function getSwim()
     {
@@ -110,14 +115,12 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Sets the configuration for Swim
      *
-     * @param SwimParser $swim
-     *
      * @return $this
      */
     private function configureSwim()
     {
         $this
-            ->getSwim
+            ->getSwim()
             ->configure(self::SWIM_CONFIG, true)
         ;
 
@@ -134,7 +137,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
      */
     public function render($string, array $args = [])
     {
-        $rendered        = $this
+        $rendered = $this
             ->getSwim()
             ->render($string)
         ;
@@ -184,7 +187,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Sets the value of nodeParsed
      *
-     * @param nodeParsed $nodeParsed description
+     * @param string $nodeParsed description
      *
      * @return $this
      */
@@ -198,7 +201,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Gets the value of nodeToc
      *
-     * @return nodeToc
+     * @return string
      */
     public function getNodeToc()
     {
@@ -208,7 +211,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Sets the value of nodeToc
      *
-     * @param nodeToc $nodeToc description
+     * @param string $nodeToc description
      *
      * @return $this
      */
@@ -222,7 +225,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Gets the value of nodeIndex
      *
-     * @return nodeIndex
+     * @return string
      */
     public function getNodeIndex()
     {
@@ -232,7 +235,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Sets the value of nodeIndex
      *
-     * @param nodeIndex $nodeIndex description
+     * @param string $nodeIndex description
      *
      * @return $this
      */
@@ -246,7 +249,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Gets the value of nodeIndexLevels
      *
-     * @return nodeIndexLevels
+     * @return string
      */
     public function getNodeIndexLevels()
     {
@@ -256,7 +259,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Sets the value of nodeIndexLevels
      *
-     * @param nodeIndexLevels $nodeIndexLevels description
+     * @param string $nodeIndexLevels description
      *
      * @return $this
      */
@@ -265,6 +268,22 @@ class NodeRendererSwim extends AbstractNodeRenderer
         $this->nodeIndexLevels = $nodeIndexLevels;
 
         return $this;
+    }
+
+    /**
+     * Get the handler type (generally this will return the class name).
+     *
+     * @param bool $fqcn
+     *
+     * @return string
+     */
+    public function getType($fqcn = false)
+    {
+        if ($fqcn === true) {
+            return (string) ClassInfo::getNamespaceByInstance($this).ClassInfo::getClassNameByInstance($this);
+        }
+
+        return self::SUPPORTED_NAME;
     }
 }
 
