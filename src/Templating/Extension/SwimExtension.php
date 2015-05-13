@@ -12,6 +12,8 @@ namespace Scribe\SwimBundle\Templating\Extension;
 
 use Scribe\MantleBundle\Templating\Extension\Part\SimpleExtensionTrait,
     Scribe\MantleBundle\Templating\Extension\Part\ContainerAwareExtensionTrait;
+use Scribe\MantleBundle\Templating\Twig\AbstractTwigExtension;
+use Scribe\SwimBundle\Component\Parser\SwimParserChain;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig_Extension,
     Twig_SimpleFilter;
@@ -19,19 +21,25 @@ use Twig_Extension,
 /**
  * SwimExtension
  */
-class SwimExtension extends Twig_Extension
+class SwimExtension extends AbstractTwigExtension
 {
-    use ContainerAwareExtensionTrait;
+    /**
+     * @var SwimParser
+     */
+    private $swimParser;
 
-    private $stdConfig = [
+    /**
+     * @var array
+     */
+    private static $stdConfig = [
         'Exclude',
         'Block',
-        'LinkWikipedia', 
+        'LinkWikipedia',
         'LinkExternal',
         'LinkInternal',
         'BootstrapColumn',
         'BootstrapTooltip',
-        'ImageBlog', 
+        'ImageBlog',
         'Callout',
         'CharacterStyle',
         'ParagraphStyle',
@@ -47,103 +55,81 @@ class SwimExtension extends Twig_Extension
     ];
 
     /**
-     * @param $container ContainerInterface
+     * @param SwimParser $swimParser
      */
-    public function __construct(ContainerInterface $container = null)
+    public function __construct(SwimParserChain $swimParser)
     {
-        $this->setContainer($container);
+        parent::__construct();
+
+        $this->swimParser = $swimParser;
+
+        $this->enableOptionHtmlSafe();
+
+        $this->addFilter('swim', [$this, 'swimGeneral']);
+        $this->addFilter('swimgeneral', [$this, 'swimGeneral']);
+        $this->addFilter('swimlearning', [$this, 'swimLearning']);
+        $this->addFilter('swimblog', [$this, 'swimBlog']);
+        $this->addFilter('swimbook', [$this, 'swimBook']);
+        $this->addFilter('swimdocs', [$this, 'swimDocs']);
     }
 
     /**
      * @param  $content string
+     *
      * @return string
      */
     public function swimGeneral($content)
     {
-        $config = $this->stdConfig;
+        $this->swimParser->configure(self::$stdConfig, true);
 
-        $swim = $this->container->get('scribe.parser.swim');
-        $swim->configure($config, true);
-
-        return $swim->render($content);
+        return $this->swimParser->render($content);
     }
 
     /**
      * @param  $content string
+     *
      * @return string
      */
     public function swimDocs($content)
     {
-        $config = $this->stdConfig;
+        $this->swimParser->configure(self::$stdConfig, true);
 
-        $swim = $this->container->get('scribe.parser.swim');
-        $swim->configure($config, true);
-
-        return $swim->render($content);
+        return $this->swimParser->render($content);
     }
 
     /**
      * @param  $content string
+     *
      * @return string
      */
     public function swimLearning($content)
     {
-        $config = $this->stdConfig;
+        $this->swimParser->configure(self::$stdConfig, true);
 
-        $swim = $this->container->get('scribe.parser.swim');
-        $swim->configure($config, true);
-        
-        return $swim->render($content);
+        return $this->swimParser->render($content);
     }
 
     /**
      * @param  $content string
+     *
      * @return string
      */
     public function swimBlog($content)
     {
-        $config = $this->stdConfig;
+        $this->swimParser->configure(self::$stdConfig, true);
 
-        $swim = $this->container->get('scribe.parser.swim');
-        $swim->configure($config, true);
-
-        return $swim->render($content);
+        return $this->swimParser->render($content);
     }
 
     /**
      * @param  $content string
+     *
      * @return string
      */
     public function swimBook($content)
     {
-        $config = $this->stdConfig;
+        $this->swimParser->configure(self::$stdConfig, true);
 
-        $swim = $this->container->get('scribe.parser.swim');
-        $swim->configure($config, true);
-
-        return $swim->render($content);
-    }
-
-    /**
-     * @return array
-     */
-    public function getFilters()
-    {
-        return [
-            new Twig_SimpleFilter('swim',         [$this, 'swimGeneral'],  ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimgeneral',  [$this, 'swimGeneral'],  ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimlearning', [$this, 'swimLearning'], ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimblog',     [$this, 'swimBlog'],     ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimbook',     [$this, 'swimBook'],     ['is_safe' => ['html']]),
-            new Twig_SimpleFilter('swimdocs',     [$this, 'swimDocs'],     ['is_safe' => ['html']]),
-        ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return __CLASS__;
+        return $this->swimParser->render($content);
     }
 }

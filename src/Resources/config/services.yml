@@ -1,25 +1,31 @@
+---
+
 parameters:
-    scribe.parser.swim.class:                Scribe\SwimBundle\Component\Parser\SwimParser
-    scribe.parser.swim.twig.class:           Scribe\SwimBundle\Templating\Extension\SwimExtension
+
+    s.swim.parser.class:                     Scribe\SwimBundle\Component\Parser\SwimParser
+    s.swim.parser.twig_extension.class:      Scribe\SwimBundle\Templating\Extension\SwimExtension
     s.swim.node_creator.renderer.swim.class: Scribe\SwimBundle\Templating\Generator\Node\Rendering\NodeRendererSwim
 
 services:
-    scribe.parser.swim:
-        class: %scribe.parser.swim.class%
-        arguments: [ "@service_container" ]
-        tags:
-            - { name: parser.swim, alias: swim }
 
-    scribe.parser.swim.twig:
-        class:     "%scribe.parser.swim.twig.class%"
-        arguments: [ "@service_container" ]
+    s.swim:
+        alias: s.swim.parser
+
+    s.swim.parser:
+        class: %s.swim.parser.class%
+        arguments:
+            - @service_container
+
+    s.swim.parser.twig_extension:
+        class: %s.swim.parser.twig_extension.class%
+        arguments:
+            - @s.swim
         tags:
             - { name: twig.extension, alias: swim.twig }
 
     s.swim.node_creator.renderer.swim:
         class: %s.swim.node_creator.renderer.swim.class%
         arguments:
-            - @scribe.parser.swim
+            - @s.swim
         tags:
             - { name: node_creator.renderer, priority: 1000 }
-

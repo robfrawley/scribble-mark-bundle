@@ -12,7 +12,7 @@
 namespace Scribe\SwimBundle\Templating\Generator\Node\Rendering;
 
 use Scribe\MantleBundle\Templating\Generator\Node\Rendering\AbstractNodeRenderer;
-use Scribe\SwimBundle\Component\Parser\SwimParser;
+use Scribe\SwimBundle\Component\Parser\SwimParserChain;
 use Scribe\Utility\ClassInfo;
 
 /**
@@ -28,7 +28,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     const SUPPORTED_NAME = 'swim';
 
     /**
-     * @var array 
+     * @var array
      */
     const SWIM_CONFIG = [
         'Exclude',
@@ -55,7 +55,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     ];
 
     /**
-     * @var SwimParser 
+     * @var SwimParser
      */
     private $swim;
 
@@ -82,7 +82,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * @param SwimParser $swim
      */
-    public function __construct(SwimParser $swim)
+    public function __construct(SwimParserChain $swim)
     {
         $this->swim = $swim;
         $this->configureSwim();
@@ -105,7 +105,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
      *
      * @return $this
      */
-    public function setSwim(SwimParser $swim)
+    public function setSwim(SwimParserChain $swim)
     {
         $this->swim = $swim;
 
@@ -154,7 +154,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
             ->getAttr('index_html')
         ;
         $this->setNodeIndex($nodeIndex);
-        
+
         $nodeIndexLevels = $this
             ->getSwim()
             ->getAttr('index_levels')
@@ -177,7 +177,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     /**
      * Gets the value of nodeParsed
      *
-     * @return string 
+     * @return string
      */
     public function getNodeParsed()
     {
