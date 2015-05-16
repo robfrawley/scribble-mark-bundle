@@ -13,6 +13,7 @@ namespace Scribe\SwimBundle\Templating\Generator\Node\Rendering;
 
 use Scribe\MantleBundle\Templating\Generator\Node\Rendering\AbstractNodeRenderer;
 use Scribe\SwimBundle\Component\Parser\SwimParserChain;
+use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManager;
 use Scribe\Utility\ClassInfo;
 
 /**
@@ -28,36 +29,9 @@ class NodeRendererSwim extends AbstractNodeRenderer
     const SUPPORTED_NAME = 'swim';
 
     /**
-     * @var array
+     * @var SwimRenderingManager
      */
-    const SWIM_CONFIG = [
-        'Exclude',
-        'Block',
-        'LinkWikipedia',
-        'LinkExternal',
-        'LinkInternal',
-        'BootstrapColumn',
-        'BootstrapTooltip',
-        'ImageBlog',
-        'Callout',
-        'CharacterStyle',
-        'ParagraphStyle',
-        'Markdown',
-        'BootstrapCollapse',
-        'BootstrapWell',
-        'MarkdownCleanup',
-        'BootstrapTableLook',
-        'BootstrapTableFeel',
-        'ParagraphLead',
-        'Toc',
-        'Index',
-        'Exclude',
-    ];
-
-    /**
-     * @var SwimParser
-     */
-    private $swim;
+    private $manager;
 
     /**
      * @var string
@@ -80,49 +54,33 @@ class NodeRendererSwim extends AbstractNodeRenderer
     private $nodeIndexLevels;
 
     /**
-     * @param SwimParser $swim
+     * @param SwimRenderingManager $manager
      */
-    public function __construct(SwimParserChain $swim)
+    public function __construct(SwimRenderingManager $manager)
     {
-        $this->swim = $swim;
-        $this->configureSwim();
+        $this->manager = $manager;
     }
 
     /**
      * Gets the value of swim
      *
-     * @return SwimParser
+     * @return SwimRenderingManager
      */
     public function getSwim()
     {
-        return $this->swim;
+        return $this->manager;
     }
 
     /**
      * Sets the value of swim
      *
-     * @param SwimParser $swim
+     * @param SwimRenderingManager $manager
      *
      * @return $this
      */
-    public function setSwim(SwimParserChain $swim)
+    public function setSwim(SwimRenderingManager $manager)
     {
-        $this->swim = $swim;
-
-        return $this;
-    }
-
-    /**
-     * Sets the configuration for Swim
-     *
-     * @return $this
-     */
-    private function configureSwim()
-    {
-        $this
-            ->getSwim()
-            ->configure(self::SWIM_CONFIG, true)
-        ;
+        $this->manager = $manager;
 
         return $this;
     }
@@ -145,19 +103,13 @@ class NodeRendererSwim extends AbstractNodeRenderer
 
         $nodeToc         = $this
             ->getSwim()
-            ->getAttr('toc_html')
+            ->getAttribute('toc_html')
         ;
         $this->setNodeToc($nodeToc);
 
-        $nodeIndex       = $this
-            ->getSwim()
-            ->getAttr('index_html')
-        ;
-        $this->setNodeIndex($nodeIndex);
-
         $nodeIndexLevels = $this
             ->getSwim()
-            ->getAttr('index_levels')
+            ->getAttribute('index_levels')
         ;
         $this->setNodeIndexLevels($nodeIndexLevels);
 

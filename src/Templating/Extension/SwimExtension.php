@@ -10,13 +10,8 @@
 
 namespace Scribe\SwimBundle\Templating\Extension;
 
-use Scribe\MantleBundle\Templating\Extension\Part\SimpleExtensionTrait,
-    Scribe\MantleBundle\Templating\Extension\Part\ContainerAwareExtensionTrait;
 use Scribe\MantleBundle\Templating\Twig\AbstractTwigExtension;
-use Scribe\SwimBundle\Component\Parser\SwimParserChain;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Twig_Extension,
-    Twig_SimpleFilter;
+use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
 
 /**
  * SwimExtension
@@ -24,47 +19,22 @@ use Twig_Extension,
 class SwimExtension extends AbstractTwigExtension
 {
     /**
-     * @var SwimParser
+     * @var SwimRenderingManagerInterface
      */
-    private $swimParser;
+    private $manager;
 
     /**
-     * @var array
+     * @param SwimRenderingManagerInterface $manager
      */
-    private static $stdConfig = [
-        'Exclude',
-        'Block',
-        'LinkWikipedia',
-        'LinkExternal',
-        'LinkInternal',
-        'BootstrapColumn',
-        'BootstrapTooltip',
-        'ImageBlog',
-        'Callout',
-        'CharacterStyle',
-        'ParagraphStyle',
-        'Markdown',
-        'BootstrapCollapse',
-        'BootstrapWell',
-        'MarkdownCleanup',
-        'BootstrapTableLook',
-        'BootstrapTableFeel',
-        'ParagraphLead',
-        'Toc',
-        'Exclude',
-    ];
-
-    /**
-     * @param SwimParser $swimParser
-     */
-    public function __construct(SwimParserChain $swimParser)
+    public function __construct(SwimRenderingManagerInterface $manager)
     {
         parent::__construct();
 
-        $this->swimParser = $swimParser;
+        $this->manager = $manager;
 
         $this->enableOptionHtmlSafe();
 
+        $this->addFunction('swim', [$this, 'swimGeneral']);
         $this->addFilter('swim', [$this, 'swimGeneral']);
         $this->addFilter('swimgeneral', [$this, 'swimGeneral']);
         $this->addFilter('swimlearning', [$this, 'swimLearning']);
@@ -80,9 +50,7 @@ class SwimExtension extends AbstractTwigExtension
      */
     public function swimGeneral($content)
     {
-        $this->swimParser->configure(self::$stdConfig, true);
-
-        return $this->swimParser->render($content);
+        return $this->manager->render($content);
     }
 
     /**
@@ -92,9 +60,7 @@ class SwimExtension extends AbstractTwigExtension
      */
     public function swimDocs($content)
     {
-        $this->swimParser->configure(self::$stdConfig, true);
-
-        return $this->swimParser->render($content);
+        return $this->manager->render($content);
     }
 
     /**
@@ -104,9 +70,7 @@ class SwimExtension extends AbstractTwigExtension
      */
     public function swimLearning($content)
     {
-        $this->swimParser->configure(self::$stdConfig, true);
-
-        return $this->swimParser->render($content);
+        return $this->manager->render($content);
     }
 
     /**
@@ -116,9 +80,8 @@ class SwimExtension extends AbstractTwigExtension
      */
     public function swimBlog($content)
     {
-        $this->swimParser->configure(self::$stdConfig, true);
+        return $this->manager->render($content);
 
-        return $this->swimParser->render($content);
     }
 
     /**
@@ -128,8 +91,7 @@ class SwimExtension extends AbstractTwigExtension
      */
     public function swimBook($content)
     {
-        $this->swimParser->configure(self::$stdConfig, true);
+        return $this->manager->render($content);
 
-        return $this->swimParser->render($content);
     }
 }

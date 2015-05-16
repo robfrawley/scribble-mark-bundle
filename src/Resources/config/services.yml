@@ -2,26 +2,191 @@
 
 parameters:
 
-    s.swim.parser.class:                     Scribe\SwimBundle\Component\Parser\SwimParser
-    s.swim.parser.twig_extension.class:      Scribe\SwimBundle\Templating\Extension\SwimExtension
-    s.swim.node_creator.renderer.swim.class: Scribe\SwimBundle\Templating\Generator\Node\Rendering\NodeRendererSwim
+    s.swim.renderer_factory.class:                      Scribe\SwimBundle\Rendering\Manager\Factory\SwimRendererFactory
+    s.swim.renderer_caching_enabled.class:              Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerCached
+    s.swim.renderer_caching_diabled.class:              Scribe\SwimBundle\Rendering\Manager\SwimRenderingManager
+    s.swim.renderer_chain.registrar.class:              Scribe\SwimBundle\Rendering\Registrar\SwimRenderingRegistrar
+
+    s.swim.renderer_type.exclude.class:                 Scribe\SwimBundle\Rendering\Handler\SwimExcludeHandler
+    s.swim.renderer_type.block.class:                   Scribe\SwimBundle\Rendering\Handler\SwimBlockHandler
+    s.swim.renderer_type.link_wikipedia.class:          Scribe\SwimBundle\Rendering\Handler\SwimLinkWikipediaHandler
+    s.swim.renderer_type.link_external.class:           Scribe\SwimBundle\Rendering\Handler\SwimLinkExternalHandler
+    s.swim.renderer_type.link_internal.class:           Scribe\SwimBundle\Rendering\Handler\SwimLinkInternalHandler
+    s.swim.renderer_type.bootstrap_column.class:        Scribe\SwimBundle\Rendering\Handler\SwimBootstrapColumnHandler
+    s.swim.renderer_type.bootstrap_tooltip.class:       Scribe\SwimBundle\Rendering\Handler\SwimBootstrapTooltipHandler
+    s.swim.renderer_type.image_static.class:            Scribe\SwimBundle\Rendering\Handler\SwimImageStaticHandler
+    s.swim.renderer_type.callout.class:                 Scribe\SwimBundle\Rendering\Handler\SwimBootstrapCallOutHandler
+    s.swim.renderer_type.character_style.class:         Scribe\SwimBundle\Rendering\Handler\SwimCharacterStyleHandler
+    s.swim.renderer_type.paragraph_style.class:         Scribe\SwimBundle\Rendering\Handler\SwimParagraphStyleHandler
+    s.swim.renderer_type.markdown.class:                Scribe\SwimBundle\Rendering\Handler\SwimMarkdownHandler
+    s.swim.renderer_type.bootstrap_collapse.class:      Scribe\SwimBundle\Rendering\Handler\SwimBootstrapCollapseHandler
+    s.swim.renderer_type.bootstrap_well.class:          Scribe\SwimBundle\Rendering\Handler\SwimBootstrapWellHandler
+    s.swim.renderer_type.markdown_cleanup.class:        Scribe\SwimBundle\Rendering\Handler\SwimMarkdownCleanupHandler
+    s.swim.renderer_type.bootstrap_table_look.class:    Scribe\SwimBundle\Rendering\Handler\SwimBootstrapTableLookHandler
+    s.swim.renderer_type.bootstrap_table_feel.class:    Scribe\SwimBundle\Rendering\Handler\SwimBootstrapTableFeelHandler
+    s.swim.renderer_type.paragraph_lead.class:          Scribe\SwimBundle\Rendering\Handler\SwimParagraphLeadHandler
+    s.swim.renderer_type.table_of_contents.class:       Scribe\SwimBundle\Rendering\Handler\SwimTableOfContentsHandler
+
+    s.swim.renderer.twig_extension.class:               Scribe\SwimBundle\Templating\Extension\SwimExtension
+    s.swim.node_creator.renderer.swim.class:            Scribe\SwimBundle\Templating\Generator\Node\Rendering\NodeRendererSwim
 
 services:
 
     s.swim:
-        alias: s.swim.parser
+        alias: s.swim.renderer
 
-    s.swim.parser:
-        class: %s.swim.parser.class%
+    s.swim.renderer:
+        class: %s.swim.renderer_caching_enabled.class%
+        factory: [%s.swim.renderer_factory.class%, getRenderer]
+        arguments:
+            - @s.mantle.service_finder
+            - %s.swim.caching.enabled%
+
+    s.swim.renderer_caching_enabled:
+        class: %s.swim.renderer_caching_enabled.class%
+        arguments:
+            - @s.swim.renderer_chain.registrar
+            - %s.swim.caching.strategy%
+            - %s.swim.caching.time_to_live%
+        calls:
+            - [setCacheHandlerChain, [@s.cache.handler_chain]]
+
+    s.swim.renderer_caching_disabled:
+        class: %s.swim.renderer_caching_enabled.class%
+        arguments:
+            - @s.swim.renderer_chain.registrar
+
+    s.swim.renderer_chain.registrar:
+        class: %s.swim.renderer_chain.registrar.class%
         arguments:
             - @service_container
+            - %s.swim.feature_matrix.exclusion%
+            - %s.swim.feature_matrix.block_level%
+            - %s.swim.feature_matrix.inline_level%
+            - %s.swim.feature_matrix.linking%
+            - %s.swim.feature_matrix.profiler%
+            - %s.swim.blacklist_matrix.renderer%
 
-    s.swim.parser.twig_extension:
-        class: %s.swim.parser.twig_extension.class%
+    s.swim.renderer_type.exclude:
+        class: %s.swim.renderer_type.exclude.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 1, priority_end: 1 }
+
+    s.swim.renderer_type.block:
+        class: %s.swim.renderer_type.block.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 2 }
+
+    s.swim.renderer_type.link_wikipedia:
+        class: %s.swim.renderer_type.link_wikipedia.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 3 }
+
+    s.swim.renderer_type.link_external:
+        class: %s.swim.renderer_type.link_external.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 4 }
+
+    s.swim.renderer_type.link_internal:
+        class: %s.swim.renderer_type.link_internal.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 5 }
+
+    s.swim.renderer_type.bootstrap_column:
+        class: %s.swim.renderer_type.bootstrap_column.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 6 }
+
+    s.swim.renderer_type.bootstrap_tooltip:
+        class: %s.swim.renderer_type.bootstrap_tooltip.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 7 }
+
+    s.swim.renderer_type.image_static:
+        class: %s.swim.renderer_type.image_static.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 8 }
+
+    s.swim.renderer_type.callout:
+        class: %s.swim.renderer_type.callout.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 9 }
+
+    s.swim.renderer_type.character_style:
+        class: %s.swim.renderer_type.character_style.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 10 }
+
+    s.swim.renderer_type.paragraph_style:
+        class: %s.swim.renderer_type.paragraph_style.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 11 }
+
+    s.swim.renderer_type.markdown:
+        class: %s.swim.renderer_type.markdown.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 12 }
+
+    s.swim.renderer_type.bootstrap_collapse:
+        class: %s.swim.renderer_type.bootstrap_collapse.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 13 }
+
+    s.swim.renderer_type.bootstrap_well:
+        class: %s.swim.renderer_type.bootstrap_well.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 14 }
+
+    s.swim.renderer_type.markdown_cleanup:
+        class: %s.swim.renderer_type.markdown_cleanup.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 15 }
+
+    s.swim.renderer_type.bootstrap_table_look:
+        class: %s.swim.renderer_type.bootstrap_table_look.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 16 }
+
+    s.swim.renderer_type.bootstrap_table_feel:
+        class: %s.swim.renderer_type.bootstrap_table_feel.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 17 }
+
+    s.swim.renderer_type.paragraph_lead:
+        class: %s.swim.renderer_type.paragraph_lead.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 18 }
+
+    s.swim.renderer_type.table_of_contents:
+        class: %s.swim.renderer_type.table_of_contents.class%
+        public: false
+        tags:
+            - { name: swim.renderer_handler, priority: 19 }
+
+    s.swim.renderer.twig_extension:
+        class: %s.swim.renderer.twig_extension.class%
         arguments:
             - @s.swim
         tags:
-            - { name: twig.extension, alias: swim.twig }
+            - { name: twig.extension }
 
     s.swim.node_creator.renderer.swim:
         class: %s.swim.node_creator.renderer.swim.class%
