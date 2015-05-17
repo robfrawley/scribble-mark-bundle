@@ -30,7 +30,6 @@ before_install:
     - sh app/config/shared_public/tests/travis/php-build-igbinary.sh
     - sh app/config/shared_public/tests/travis/php-build-memcached.sh
     - sh app/config/shared_public/tests/travis/php-build-twig.sh
-    - sh app/config/shared_public/tests/travis/php-build-sundown.sh
     - phpenv config-add app/config/shared_public/tests/travis/config-timezone.ini
     - phpenv rehash
     - mkdir -p build/logs
