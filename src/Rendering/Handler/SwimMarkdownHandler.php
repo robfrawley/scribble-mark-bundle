@@ -16,13 +16,40 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimMarkdownHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param  null $string
-     * @return mixed|null
+     * @var \ParsedownExtra
      */
-    public function render($string = null, array $args = [])
-    {
-    	$markdown = $this->getContainer()->get('kwattro_markdown');
+    private $parsedown;
 
-        return $markdown->render($string);
+    /**
+     * Construct handler by creating parsedown instance.
+     */
+    public function __construct()
+    {
+        $this->parsedown = new \ParsedownExtra();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategory()
+    {
+        return self::CATEGORY_MARKDOWN_EXTRA;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
+        $string = $this->parsedown->text($string);
+
+        $this->stopwatchStop($this->getType());
+
+        return $string;
     }
 }

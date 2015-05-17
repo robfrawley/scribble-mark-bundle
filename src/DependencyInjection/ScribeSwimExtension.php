@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Scribe Cache Bundle.
+ * This file is part of the Scribe Symfony Swim Bundle.
  *
- * (c) Scribe Inc. <source@scribe.software>
+ * (c) Scribe Inc. <https://scribe.software>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -21,7 +21,7 @@ class ScribeSwimExtension extends AbstractExtension
 {
     /**
      * Load the configuration from the yaml config based on definitions defined
-     * within the {@see Configuration.php} file.
+     * within the {@see Scribe\SwimBundle\DependencyInjection\Configuration} file.
      *
      * @param array            $configs   the configs to load
      * @param ContainerBuilder $container symfony container for configurations

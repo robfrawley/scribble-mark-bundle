@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of the Scribe World Application.
+ * This file is part of the Scribe Symfony Swim Bundle.
  *
- * (c) Scribe Inc. <scribe@scribenet.com>
+ * (c) Scribe Inc. <https://scribe.software>
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
-use Scribe\Component\DependencyInjection\Container\ContainerAwareTrait;
+use Scribe\Component\DependencyInjection\Aware\StopwatchActionsAwareTrait;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
 use Scribe\Utility\ClassInfo;
 
@@ -20,7 +20,7 @@ use Scribe\Utility\ClassInfo;
  */
 abstract class AbstractSwimRenderingHandler implements SwimRenderingHandlerInterface
 {
-    use ContainerAwareTrait;
+    use StopwatchActionsAwareTrait;
 
     /**
      * @var array
@@ -34,6 +34,11 @@ abstract class AbstractSwimRenderingHandler implements SwimRenderingHandlerInter
      * @return string
      */
     abstract public function render($string, array $args = []);
+
+    /**
+     * @return string
+     */
+    abstract public function getCategory();
 
     /**
      * @param mixed ...$by
@@ -112,3 +117,5 @@ abstract class AbstractSwimRenderingHandler implements SwimRenderingHandlerInter
         return $this;
     }
 }
+
+/* EOF */

@@ -17,10 +17,20 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimBootstrapWellHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
+    {
+        return self::CATEGORY_BOOTSTRAP_COMPONENTS;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
     {
         $string = str_ireplace('{~well:start}', '<div class="well">', $string);
         $string = str_ireplace('{~well:end}',   '</div>',             $string);

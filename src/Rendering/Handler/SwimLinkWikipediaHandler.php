@@ -16,11 +16,23 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimLinkWikipediaHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
+        return self::CATEGORY_LINK_DECORATING;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         @preg_match_all('#{~wiki:([^ ]*?)( (.*?))?}#i', $string, $nodeWikiMatches);
         if (0 < count($nodeWikiMatches[0])) {
 
@@ -34,6 +46,8 @@ class SwimLinkWikipediaHandler extends AbstractSwimRenderingHandler
                 $string = str_replace($original, $replace, $string);
             }
         }
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

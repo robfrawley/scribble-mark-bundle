@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2104e0082d16625f406790eaf9ee425d",
+    "hash": "18b01dc28ee04d3d7ad2021ac4d6ecbb",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -768,6 +768,89 @@
             "time": "2015-04-02 20:40:18"
         },
         {
+            "name": "erusev/parsedown",
+            "version": "1.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a",
+                "reference": "b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-04-29 20:22:24"
+        },
+        {
+            "name": "erusev/parsedown-extra",
+            "version": "0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown-extra.git",
+                "reference": "11a44e076d02ffcc4021713398a60cd73f78b6f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown-extra/zipball/11a44e076d02ffcc4021713398a60cd73f78b6f5",
+                "reference": "11a44e076d02ffcc4021713398a60cd73f78b6f5",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "~1.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParsedownExtra": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "An extension of Parsedown that adds support for Markdown Extra.",
+            "homepage": "https://github.com/erusev/parsedown-extra",
+            "keywords": [
+                "markdown",
+                "markdown extra",
+                "parsedown",
+                "parser"
+            ],
+            "time": "2015-01-25 14:52:34"
+        },
+        {
             "name": "incenteev/composer-parameter-handler",
             "version": "v2.1.0",
             "target-dir": "Incenteev/ParameterHandler",
@@ -1260,91 +1343,6 @@
                 "symfony-mantle-bundle"
             ],
             "time": "2015-05-16 15:33:04"
-        },
-        {
-            "name": "scribe/markdown-bundle",
-            "version": "v0.1.0",
-            "target-dir": "Kwattro/MarkdownBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/scribenet/ScribeMarkdownBundle.git",
-                "reference": "6e825ce22d08ad9c34c6d6e3e4106f479e236468"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/scribenet/ScribeMarkdownBundle/zipball/6e825ce22d08ad9c34c6d6e3e4106f479e236468",
-                "reference": "6e825ce22d08ad9c34c6d6e3e4106f479e236468",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/framework-bundle": "2.*",
-                "symfony/twig-bundle": "*"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Kwattro\\MarkdownBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kwattro",
-                    "homepage": "https://github.com/kwattro"
-                }
-            ],
-            "description": "A Bundle that integrates the Sundown parser",
-            "keywords": [
-                "markdown",
-                "sundown"
-            ],
-            "time": "2014-09-25 01:29:49"
-        },
-        {
-            "name": "scribe/pygments-bundle",
-            "version": "v0.1.0",
-            "target-dir": "Varspool/PygmentsBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/scribenet/ScribePygmentsBundle.git",
-                "reference": "b60c37cf96d060389bed54414adc751baf584a12"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/scribenet/ScribePygmentsBundle/zipball/b60c37cf96d060389bed54414adc751baf584a12",
-                "reference": "b60c37cf96d060389bed54414adc751baf584a12",
-                "shasum": ""
-            },
-            "require": {
-                "scribe/markdown-bundle": "~0.1",
-                "symfony/framework-bundle": "~2.5"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Varspool\\PygmentsBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dominic Scheirlinck",
-                    "homepage": "https://github.com/dominics"
-                }
-            ],
-            "description": "A bundle that integrates Pygments to provide code-highlighting within Sundown rendered Markdown",
-            "keywords": [
-                "markdown",
-                "pygments",
-                "sundown"
-            ],
-            "time": "2014-09-25 01:35:59"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -3894,7 +3892,12 @@
     "stability-flags": {
         "scribe/mantle-bundle": 20,
         "scribe/cache-bundle": 20,
+        "symfony/console": 10,
+        "symfony/dependency-injection": 10,
+        "symfony/twig-bundle": 10,
+        "symfony/twig-bridge": 10,
         "symfony/symfony": 10,
+        "symfony/stopwatch": 10,
         "symfony/framework-bundle": 10,
         "symfony/phpunit-bridge": 10,
         "doctrine/doctrine-fixtures-bundle": 20,

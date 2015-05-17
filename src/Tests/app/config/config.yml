@@ -83,6 +83,3 @@ scribe_cache:
     global:
         enabled: true
         prefix:  'phpunit'
-
-kwattro_markdown:
-    renderer: html

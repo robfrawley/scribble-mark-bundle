@@ -35,8 +35,6 @@ class AppKernel extends Kernel
             new \Scribe\MantleBundle\ScribeMantleBundle(),
             new \Scribe\SwimBundle\ScribeSwimBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Kwattro\MarkdownBundle\KwattroMarkdownBundle(),
-            new Varspool\PygmentsBundle\VarspoolPygmentsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

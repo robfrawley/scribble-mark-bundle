@@ -11,6 +11,7 @@
 namespace Scribe\SwimBundle\Rendering\Handler;
 
 use InvalidArgumentException;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * SwimLinkInternalHandler.
@@ -18,13 +19,40 @@ use InvalidArgumentException;
 class SwimLinkInternalHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param  null $work
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * @param RouterInterface $router
+     */
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+    }
+
+    /**
      * @return string
      */
-    public function render($work = null, array $args = [])
+    public function getCategory()
     {
-        $work = $this->renderLinks($work);
+        return self::CATEGORY_LINK_INTERNAL_ROUTING;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
+        $work = $this->renderLinks($string);
         $work = $this->renderPaths($work);
+
+        $this->stopwatchStop($this->getType());
 
         return $work;
     }
@@ -58,11 +86,6 @@ class SwimLinkInternalHandler extends AbstractSwimRenderingHandler
 
         if (count($matches[0]) > 0) {
 
-            $router = $this
-                ->getContainer()
-                ->get('router')
-            ;
-
             for ($i = 0; $i < count($matches[0]); $i++) {
 
                 $original = $matches[0][$i];
@@ -71,7 +94,7 @@ class SwimLinkInternalHandler extends AbstractSwimRenderingHandler
                 $pathArgs = empty($matches[5][$i]) ? []   : @json_decode('{'.$matches[5][$i].'}', true);
 
                 try {
-                    $url = $router->generate($path, $pathArgs);
+                    $url = $this->router->generate($path, $pathArgs);
                 }
                 catch(InvalidArgumentException $e) {
                     $url = '#';

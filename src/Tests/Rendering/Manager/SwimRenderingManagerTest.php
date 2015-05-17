@@ -32,8 +32,7 @@ class SwimRenderingManagerTest extends AbstractMantleKernelTestCase
         $expected = '<h1 id="anchor-header1">Header 1</h1>
 <p>Some text.</p>
 <h2 id="anchor-header2">Header 2</h2>
-<p>Other text.</p>
-';
+<p>Other text.</p>';
 
         $result = $manager->render($swim);
 
@@ -51,12 +50,24 @@ class SwimRenderingManagerTest extends AbstractMantleKernelTestCase
         $expected = '<h1 id="anchor-header1">Header 1</h1>
 <p>Random number: '.$rand1.'.</p>
 <h2 id="anchor-header2">Header 2</h2>
-<p>Random number: '.$rand2.'.</p>
-';
+<p>Random number: '.$rand2.'.</p>';
 
         $result = $manager->render($swim);
 
         static::assertEquals($expected, $result);
+    }
+
+    public function testSwimManagerFullPage()
+    {
+        $manager = static::$staticContainer->get('s.swim');
+        $dirPath = realpath(static::$staticContainer->getParameter('kernel.root_dir').'/../../../app/config/shared_public/tests/fixtures/ScribeSwimBundle/Rendering/Manager/');
+
+        $content_swim = file_get_contents($dirPath.'/scml.swim');
+        $content_html = file_get_contents($dirPath.'/scml.html');
+
+        $result = $manager->render($content_swim);
+
+        static::assertEquals($content_html, $result);
     }
 }
 

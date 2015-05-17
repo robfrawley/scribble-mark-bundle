@@ -16,6 +16,74 @@ use Scribe\MantleBundle\Templating\Generator\RendererInterface;
 /**
  * Class SwimRendererRegistrarInterface.
  */
-interface SwimRenderingRegistrarInterface {}
+interface SwimRenderingRegistrarInterface
+{
+    /**
+     * @return bool[]
+     */
+    public function getHandlerCategorySet();
+
+    /**
+     * @param bool[] $handlerCategorySet
+     *
+     * @return $this
+     */
+    public function setHandlerCategorySet(array $handlerCategorySet = []);
+
+    /**
+     * @param string $handlerCategory
+     *
+     * @return bool
+     */
+    public function hasHandlerCategory($handlerCategory);
+
+    /**
+     * @param string $handlerCategory
+     * @param bool   $state
+     *
+     * @return $this
+     */
+    public function addHandlerCategory($handlerCategory, $state = true);
+
+    /**
+     * @param string $handlerCategory
+     *
+     * @return $this
+     */
+    public function removeHandlerCategory($handlerCategory);
+
+    /**
+     * @return array
+     */
+    public function getHandlerBlacklistSet();
+
+    /**
+     * @param string[] $handlerBlacklistSet
+     *
+     * @return $this
+     */
+    public function setHandlerBlacklistSet(array $handlerBlacklistSet = []);
+
+    /**
+     * @param string $handler
+     *
+     * @return bool
+     */
+    public function hasHandlerBlacklist($handler);
+
+    /**
+     * @param string $handler
+     *
+     * @return $this
+     */
+    public function addHandlerBlacklist($handler);
+
+    /**
+     * @param string $handler
+     *
+     * @return $this
+     */
+    public function removeHandlerBlacklist($handler);
+}
 
 /* EOF */

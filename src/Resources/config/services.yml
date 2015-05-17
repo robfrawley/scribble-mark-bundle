@@ -2,13 +2,23 @@
 
 parameters:
 
+    # Factory for Active Swim Rendering Manager (Cahced/Non-Cached)
+
     s.swim.renderer_factory.class:                      Scribe\SwimBundle\Rendering\Manager\Factory\SwimRendererFactory
+
+    # Swim Rendering Managers
+
     s.swim.renderer_caching_enabled.class:              Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerCached
     s.swim.renderer_caching_diabled.class:              Scribe\SwimBundle\Rendering\Manager\SwimRenderingManager
+
+    # Swim Rendering Handler Registrar
+
     s.swim.renderer_chain.registrar.class:              Scribe\SwimBundle\Rendering\Registrar\SwimRenderingRegistrar
 
-    s.swim.renderer_type.exclude.class:                 Scribe\SwimBundle\Rendering\Handler\SwimExcludeHandler
-    s.swim.renderer_type.block.class:                   Scribe\SwimBundle\Rendering\Handler\SwimBlockHandler
+    # Swim Rendering Handlers
+
+    s.swim.renderer_type.block_excludes.class:          Scribe\SwimBundle\Rendering\Handler\SwimBlockExcludesHandler
+    s.swim.renderer_type.block_restrictions.class:      Scribe\SwimBundle\Rendering\Handler\SwimBlockRestrictionsHandler
     s.swim.renderer_type.link_wikipedia.class:          Scribe\SwimBundle\Rendering\Handler\SwimLinkWikipediaHandler
     s.swim.renderer_type.link_external.class:           Scribe\SwimBundle\Rendering\Handler\SwimLinkExternalHandler
     s.swim.renderer_type.link_internal.class:           Scribe\SwimBundle\Rendering\Handler\SwimLinkInternalHandler
@@ -26,14 +36,24 @@ parameters:
     s.swim.renderer_type.bootstrap_table_feel.class:    Scribe\SwimBundle\Rendering\Handler\SwimBootstrapTableFeelHandler
     s.swim.renderer_type.paragraph_lead.class:          Scribe\SwimBundle\Rendering\Handler\SwimParagraphLeadHandler
     s.swim.renderer_type.table_of_contents.class:       Scribe\SwimBundle\Rendering\Handler\SwimTableOfContentsHandler
+    s.swim.renderer_type.profiler.class:                Scribe\SwimBundle\Rendering\Handler\SwimProfilerHandler
+
+    # Twig Extensions
 
     s.swim.renderer.twig_extension.class:               Scribe\SwimBundle\Templating\Extension\SwimExtension
+
+    # Node Renderer Handler
+
     s.swim.node_creator.renderer.swim.class:            Scribe\SwimBundle\Templating\Generator\Node\Rendering\NodeRendererSwim
 
 services:
 
+    # Swim Manager
+
     s.swim:
         alias: s.swim.renderer
+
+    # Factory for Active Swim Rendering Manager (Cahced/Non-Cached)
 
     s.swim.renderer:
         class: %s.swim.renderer_caching_enabled.class%
@@ -41,6 +61,8 @@ services:
         arguments:
             - @s.mantle.service_finder
             - %s.swim.caching.enabled%
+
+    # Swim Rendering Managers
 
     s.swim.renderer_caching_enabled:
         class: %s.swim.renderer_caching_enabled.class%
@@ -56,26 +78,29 @@ services:
         arguments:
             - @s.swim.renderer_chain.registrar
 
+    # Swim Rendering Handler Registrar
+
     s.swim.renderer_chain.registrar:
         class: %s.swim.renderer_chain.registrar.class%
         arguments:
-            - @service_container
-            - %s.swim.feature_matrix.exclusion%
-            - %s.swim.feature_matrix.block_level%
-            - %s.swim.feature_matrix.inline_level%
-            - %s.swim.feature_matrix.linking%
-            - %s.swim.feature_matrix.profiler%
-            - %s.swim.blacklist_matrix.renderer%
+            - @?debug.stopwatch
+            - %s.swim.blacklist.rendering_handlers%
 
-    s.swim.renderer_type.exclude:
-        class: %s.swim.renderer_type.exclude.class%
+    # Swim Rendering Handlers
+
+    s.swim.renderer_type.block_excludes:
+        class: %s.swim.renderer_type.block_excludes.class%
         public: false
         tags:
             - { name: swim.renderer_handler, priority: 1, priority_end: 1 }
 
-    s.swim.renderer_type.block:
-        class: %s.swim.renderer_type.block.class%
+    s.swim.renderer_type.block_restrictions:
+        class: %s.swim.renderer_type.block_restrictions.class%
         public: false
+        arguments:
+            - @security.authorization_checker
+            - @security.token_storage
+            - @?s.security.org.repo
         tags:
             - { name: swim.renderer_handler, priority: 2 }
 
@@ -94,6 +119,8 @@ services:
     s.swim.renderer_type.link_internal:
         class: %s.swim.renderer_type.link_internal.class%
         public: false
+        arguments:
+            - @router
         tags:
             - { name: swim.renderer_handler, priority: 5 }
 
@@ -178,8 +205,18 @@ services:
     s.swim.renderer_type.table_of_contents:
         class: %s.swim.renderer_type.table_of_contents.class%
         public: false
+        arguments:
+            - @service_container
         tags:
             - { name: swim.renderer_handler, priority: 19 }
+
+#    s.swim.renderer_type.profiler:
+#        class: %s.swim.renderer_type.profiler.class%
+#        public: false
+#        tags:
+#            - { name: swim.renderer_handler, priority: 0, insert_between: true }
+
+    # Twig Extensions
 
     s.swim.renderer.twig_extension:
         class: %s.swim.renderer.twig_extension.class%
@@ -187,6 +224,8 @@ services:
             - @s.swim
         tags:
             - { name: twig.extension }
+
+    # Node Renderer Handler
 
     s.swim.node_creator.renderer.swim:
         class: %s.swim.node_creator.renderer.swim.class%

@@ -10,25 +10,52 @@
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * Class SwimTableOfContentsHandler.
  */
 class SwimTableOfContentsHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * render function called on all SwimSteps
-     *
-     * @param null $string
-     * @return mixed|null
+     * @var ContainerInterface
      */
-    public function render($string = null, array $args = [])
+    private $container;
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategory()
+    {
+        return self::CATEGORY_BLOCK_LEVEL_GENERAL;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         list($string, $toc_html, $toc_levels) = $this->buildToc($string);
 
         $this->addAttributes([
             'toc_html' => $toc_html,
             'toc_levels' => $toc_levels
         ]);
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }
@@ -159,12 +186,9 @@ class SwimTableOfContentsHandler extends AbstractSwimRenderingHandler
      */
     private function getTocHtml(array $toc_heads)
     {
-        $engine = $this
-            ->getContainer()
-            ->get('templating')
-        ;
+        $twig = $this->container->get('twig');
 
-        return $engine->render(
+        return $twig->render(
             'ScribeSwimBundle:Toc:contents.html.twig',
             [
                 'toc_heads' => $toc_heads

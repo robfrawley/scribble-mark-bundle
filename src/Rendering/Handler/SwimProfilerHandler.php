@@ -16,6 +16,14 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimProfilerHandler extends AbstractSwimRenderingHandler
 {
     /**
+     * @return string
+     */
+    public function getCategory()
+    {
+        return self::CATEGORY_PROFILER;
+    }
+
+    /**
      * @var boolean
      */
     protected $firstPass = true;
@@ -31,10 +39,12 @@ class SwimProfilerHandler extends AbstractSwimRenderingHandler
     protected $stopTime = null;
 
     /**
-     * @param null $string
-     * @return mixed|null
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function render($string, array $args = [])
     {
         if ($this->firstPass === true) {
             $this->firstPass = false;

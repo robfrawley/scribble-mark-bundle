@@ -10,20 +10,28 @@
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
-use \Sundown;
-
 /**
  * Class SwimParagraphStyleHandler.
  */
 class SwimParagraphStyleHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
-        $markdown = $this->getContainer()->get('kwattro_markdown');
+        return self::CATEGORY_BLOCK_LEVEL_GENERAL;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
 
         @preg_match_all('#<\s([^\|]*?)\|(.*)#i', $string, $matches);
         if (0 < count($matches[0])) {
@@ -34,6 +42,8 @@ class SwimParagraphStyleHandler extends AbstractSwimRenderingHandler
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

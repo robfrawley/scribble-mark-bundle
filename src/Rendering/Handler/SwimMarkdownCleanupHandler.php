@@ -16,11 +16,23 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
+        return self::CATEGORY_MARKDOWN_GENERAL;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         @preg_match_all('#<p>(</.*>)</p>#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
@@ -43,6 +55,8 @@ class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
                 $string = str_ireplace($matches[0][$i], $matches[1][$i], $string);
             }
         }
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

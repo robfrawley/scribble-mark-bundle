@@ -17,21 +17,34 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimBootstrapTableLookHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * render this swim step
-     *
-     * @param  string|null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
+        return self::CATEGORY_BOOTSTRAP_COMPONENTS;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         list($config, $search) = $this->getConfig($string);
 
         if ($config === null || $search === null) {
+            $this->stopwatchStop($this->getType());
             return $string;
         }
 
         $this->removeConfigFromContent($string, $search);
         $this->handleTableLook($string, $config);
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

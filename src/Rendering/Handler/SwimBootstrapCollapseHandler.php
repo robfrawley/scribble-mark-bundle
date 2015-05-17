@@ -19,14 +19,27 @@ use Scribe\Utility\Filter\StringFilter;
 class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param string $string
-     *
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
+        return self::CATEGORY_BOOTSTRAP_COMPONENTS;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         $string = $this->doIndependentCollapses($string);
         $string = $this->doSingleCollapses($string);
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

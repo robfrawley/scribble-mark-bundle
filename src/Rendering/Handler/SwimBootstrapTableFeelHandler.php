@@ -17,21 +17,34 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * render this swim step
-     *
-     * @param  string|null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
+        return self::CATEGORY_BOOTSTRAP_COMPONENTS;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         list($config_cols, $config_size, $search) = $this->getConfig($string);
 
         if ($config_cols === null || $config_size === null || $search === null) {
+            $this->stopwatchStop($this->getType());
             return $string;
         }
 
         $this->removeConfigFromContent($string, $search);
         $this->handleTableFeel($string, $config_cols, $config_size);
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Scribe Cache Bundle.
+ * This file is part of the Scribe Symfony Swim Bundle.
  *
- * (c) Scribe Inc. <source@scribe.software>
+ * (c) Scribe Inc. <https://scribe.software>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -92,30 +92,44 @@ class Configuration implements ConfigurationInterface
             ->root('feature_matrix')
             ->addDefaultsIfNotSet()
             ->children()
-                ->booleanNode('exclusion')
+                ->booleanNode('block_excludes')
+                    ->defaultTrue()
+                    ->info('Allows for content to be excluded from rendering and added back afterwards.')
+                ->end()
+                ->booleanNode('block_restrictions')
                     ->defaultTrue()
                     ->info('Allows for content to be hidden or displayed based on a single or collection of client codes.')
                 ->end()
-                ->booleanNode('block_level')
+                ->booleanNode('block_level_general')
                     ->defaultTrue()
                     ->info('Handles parsing block-level elements within the content.')
                 ->end()
-                ->booleanNode('inline_level')
+                ->booleanNode('inline_level_general')
                     ->defaultTrue()
                     ->info('Handles parsing inline-level elements within the content.')
                 ->end()
-                ->booleanNode('linking')
+                ->booleanNode('link_internal_routes')
+                    ->defaultTrue()
+                    ->info('Enabled generating linking between nodes and generic Symfony routes using the router service.')
+                ->end()
+                ->booleanNode('link_decorating')
                     ->defaultTrue()
                     ->info(
-                        'Handles providing support for affecting the render of of inner- and outer-site links, such as all '.
-                        'links directing to Wikipedia show a small Wikipedia icon next to them.'
+                        'Decorates internal and external links to help provide context to the user. For examples, generic external links '.
+                        'should a small exit error to their left while Wikipedia/Google links show a small brand icon to their left.'
                     )
                 ->end()
-                ->booleanNode('profiler')
-                    ->defaultFalse()
-                    ->info(
-                        'Provides information as the the time it took to render.'
-                    )
+                ->booleanNode('markdown_basic')
+                    ->defaultTrue()
+                    ->info('Enables or disabled parsing of Markdown syntax using http://parsedown.org/')
+                ->end()
+                ->booleanNode('markdown_extra')
+                    ->defaultTrue()
+                    ->info('Enables or disables parsing of Markdown Extra syntax using http://parsedown.org/')
+                ->end()
+                ->booleanNode('bootstrap_components')
+                    ->defaultTrue()
+                    ->info('Enables or disables a collection of Bootstrap-specific renderers.')
                 ->end()
             ->end()
         ;
@@ -124,10 +138,10 @@ class Configuration implements ConfigurationInterface
     private function getBlacklistNode()
     {
         return (new TreeBuilder())
-            ->root('blacklist_matrix')
+            ->root('blacklist')
             ->addDefaultsIfNotSet()
             ->children()
-                ->arrayNode('renderer')
+                ->arrayNode('rendering_handlers')
                     ->defaultValue([])
                     ->info('List of renderer steps to blacklist (they will not be registered with the renderer chain and therefore will not run.')
                     ->prototype('scalar')->end()

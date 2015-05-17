@@ -10,25 +10,46 @@
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
-use \Sundown;
-
 /**
  * Class SwimCharacterStyleHandler
  */
 class SwimCharacterStyleHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param null $string
-     * @return mixed|null
+     * @var \ParsedownExtra
      */
-    public function render($string = null, array $args = [])
+    private $parsedown;
+
+    /**
+     * Construct handler by creating parsedown instance.
+     */
+    public function __construct()
     {
-        $markdown = $this->getContainer()->get('kwattro_markdown');
+        $this->parsedown = new \ParsedownExtra();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategory()
+    {
+        return self::CATEGORY_INLINE_LEVEL_GENERAL;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
 
         @preg_match_all('#{~sm:(.*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i=0; $i<count($matches[0]); $i++) {
-                $replace = '<small class="text-muted">'.$markdown->render($matches[1][$i]).'</small>';
+                $replace = '<small class="text-muted">'.$this->parsedown->text($matches[1][$i]).'</small>';
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
@@ -48,6 +69,8 @@ class SwimCharacterStyleHandler extends AbstractSwimRenderingHandler
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

@@ -16,11 +16,23 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimLinkExternalHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
+        return self::CATEGORY_LINK_DECORATING;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         @preg_match_all('#{~a:([^ ]*?)( (.*?))?}#i', $string, $nodeAMatches);
         if (0 < count($nodeAMatches[0])) {
 
@@ -69,6 +81,8 @@ class SwimLinkExternalHandler extends AbstractSwimRenderingHandler
                 $string = str_replace($original, $replace, $string);
             }
         }
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }

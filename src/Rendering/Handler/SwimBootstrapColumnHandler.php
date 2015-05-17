@@ -17,11 +17,23 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 class SwimBootstrapColumnHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @param null $string
-     * @return mixed|null
+     * @return string
      */
-    public function render($string = null, array $args = [])
+    public function getCategory()
     {
+        return self::CATEGORY_BOOTSTRAP_COMPONENTS;
+    }
+
+    /**
+     * @param string $string
+     * @param array  $args
+     *
+     * @return string
+     */
+    public function render($string, array $args = [])
+    {
+        $this->stopwatchStart($this->getType(), 'Swim');
+
         $string = str_ireplace('{~row:start}', '<div class="row">', $string);
         $string = str_ireplace('{~row:end}', '</div>', $string);
 
@@ -44,6 +56,8 @@ class SwimBootstrapColumnHandler extends AbstractSwimRenderingHandler
         if (count($matches) > 0) {
             $string = str_ireplace('{~col:end}', '</div>', $string);
         }
+
+        $this->stopwatchStop($this->getType());
 
         return $string;
     }
