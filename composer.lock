@@ -1143,12 +1143,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/scribenet/symfony-cache-bundle.git",
-                "reference": "4784c3beaf0a11032fb80637c9b6971500af478a"
+                "reference": "fabeeb7d4a78cffc5f19f60e6994ce7367570ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scribenet/symfony-cache-bundle/zipball/4784c3beaf0a11032fb80637c9b6971500af478a",
-                "reference": "4784c3beaf0a11032fb80637c9b6971500af478a",
+                "url": "https://api.github.com/repos/scribenet/symfony-cache-bundle/zipball/fabeeb7d4a78cffc5f19f60e6994ce7367570ffe",
+                "reference": "fabeeb7d4a78cffc5f19f60e6994ce7367570ffe",
                 "shasum": ""
             },
             "require": {
@@ -1221,7 +1221,7 @@
                 "symfony-cache-bundle",
                 "symfony-framework"
             ],
-            "time": "2015-05-16 11:32:23"
+            "time": "2015-05-17 04:10:59"
         },
         {
             "name": "scribe/mantle-bundle",
@@ -1229,12 +1229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/scribenet/symfony-mantle-bundle.git",
-                "reference": "b7f3c25a7dd393fba4dcc39a4a1ff764497b6c95"
+                "reference": "57b6c05bc9fcadff51610fce50a454684d391dfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scribenet/symfony-mantle-bundle/zipball/b7f3c25a7dd393fba4dcc39a4a1ff764497b6c95",
-                "reference": "b7f3c25a7dd393fba4dcc39a4a1ff764497b6c95",
+                "url": "https://api.github.com/repos/scribenet/symfony-mantle-bundle/zipball/57b6c05bc9fcadff51610fce50a454684d391dfc",
+                "reference": "57b6c05bc9fcadff51610fce50a454684d391dfc",
                 "shasum": ""
             },
             "require": {
@@ -1343,7 +1343,7 @@
                 "symfony-framework",
                 "symfony-mantle-bundle"
             ],
-            "time": "2015-05-17 04:05:24"
+            "time": "2015-05-17 04:15:09"
         },
         {
             "name": "sensio/distribution-bundle",
