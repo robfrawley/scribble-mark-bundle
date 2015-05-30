@@ -14,8 +14,6 @@ namespace Scribe\SwimBundle\Rendering\Handler;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Scribe\SecurityBundle\Entity\User;
-use Scribe\SecurityBundle\Entity\Org;
 use Scribe\SecurityBundle\Entity\OrgRepository;
 
 /**
@@ -24,12 +22,12 @@ use Scribe\SecurityBundle\Entity\OrgRepository;
 class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
 {
     /**
-     * @var AuthorizationCheckerInterface $authorizationChecker
+     * @var AuthorizationCheckerInterface
      */
     private $authorizationChecker;
 
     /**
-     * @var TokenStorageInterface $tokenStorage
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
@@ -105,7 +103,7 @@ class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
         $matchesOriginalStr = $matches[0];
         $matchesRestriction = $matches[1];
 
-        foreach(range(0, count($matchesOriginalStr) - 1) as $i) {
+        foreach (range(0, count($matchesOriginalStr) - 1) as $i) {
             $restrictionSet = (array) explode('|', $matchesRestriction[$i]);
 
             if (true === $areRestrictionsMet($restrictionSet)) {

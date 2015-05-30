@@ -36,9 +36,9 @@ class SwimBootstrapTooltipHandler extends AbstractSwimRenderingHandler
 
         @preg_match_all('#{~tt:(.*?) (.*?)}#i', $string, $matches);
         if (0 < count($matches[0])) {
-            for ($i=0; $i<count($matches[0]); $i++) {
+            for ($i = 0; $i < count($matches[0]); $i++) {
                 $replace = '<span class="tooltipie" data-toggle="tooltip" title="'.$matches[2][$i].'">'.$matches[1][$i].'</span>';
-                $string  = str_ireplace($matches[0][$i], $replace, $string);
+                $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
 

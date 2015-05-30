@@ -11,8 +11,6 @@
 
 namespace Scribe\SwimBundle\Rendering\Manager;
 
-use Scribe\MantleBundle\Templating\Generator\RendererInterface;
-
 /**
  * Class SwimRendererManagerInterface.
  */

@@ -4,3 +4,4 @@
 atlassian-ide-plugin.xml
 *.DS_Store*
 *.rb
+tags

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Scribe World Application.
  *
@@ -11,7 +12,7 @@
 namespace Scribe\SwimBundle\Rendering\Handler;
 
 /**
- * Class SwimImageStaticHandler
+ * Class SwimImageStaticHandler.
  */
 class SwimImageStaticHandler extends AbstractSwimRenderingHandler
 {
@@ -38,10 +39,10 @@ class SwimImageStaticHandler extends AbstractSwimRenderingHandler
 
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
-                $original    = $matches[0][$i];
-                $image_src   = $matches[1][$i];
+                $original = $matches[0][$i];
+                $image_src = $matches[1][$i];
                 $image_title = $matches[2][$i];
-                $replace     =
+                $replace =
                     '<div class="text-center">'.
                     '<img src="/static/images/blog/'.$image_src.'" alt="Image: '.$image_title.'">'.
                     '<p><small class="text-muted">'.$image_title.'</small></p>'.

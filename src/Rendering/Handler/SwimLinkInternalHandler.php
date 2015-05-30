@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Scribe World Application.
  *
@@ -64,14 +65,12 @@ class SwimLinkInternalHandler extends AbstractSwimRenderingHandler
         @preg_match_all($pattern, $work, $matches);
 
         if (count($matches[0]) > 0) {
-
             for ($i = 0; $i < count($matches[0]); $i++) {
-
                 $original = $matches[0][$i];
-                $url      = $matches[1][$i];
-                $title    = empty($matches[3][$i]) ? $url : $matches[3][$i];
-                $replace  = '<a href="'.$url.'">'.$title.'</a>';
-                $work     = str_replace($original, $replace, $work);
+                $url = $matches[1][$i];
+                $title = empty($matches[3][$i]) ? $url : $matches[3][$i];
+                $replace = '<a href="'.$url.'">'.$title.'</a>';
+                $work = str_replace($original, $replace, $work);
             }
         }
 
@@ -85,23 +84,20 @@ class SwimLinkInternalHandler extends AbstractSwimRenderingHandler
         @preg_match_all($pattern, $work, $matches);
 
         if (count($matches[0]) > 0) {
-
             for ($i = 0; $i < count($matches[0]); $i++) {
-
                 $original = $matches[0][$i];
-                $path     = $matches[1][$i];
-                $title    = empty($matches[3][$i]) ? $path : $matches[3][$i];
+                $path = $matches[1][$i];
+                $title = empty($matches[3][$i]) ? $path : $matches[3][$i];
                 $pathArgs = empty($matches[5][$i]) ? []   : @json_decode('{'.$matches[5][$i].'}', true);
 
                 try {
                     $url = $this->router->generate($path, $pathArgs);
-                }
-                catch(InvalidArgumentException $e) {
+                } catch (InvalidArgumentException $e) {
                     $url = '#';
                 }
 
-                $replace  = '<a href="'.$url.'">'.$title.'</a>';
-                $work     = str_replace($original, $replace, $work);
+                $replace = '<a href="'.$url.'">'.$title.'</a>';
+                $work = str_replace($original, $replace, $work);
             }
         }
 

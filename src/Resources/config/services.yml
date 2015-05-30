@@ -71,7 +71,7 @@ services:
             - %s.swim.caching.strategy%
             - %s.swim.caching.time_to_live%
         calls:
-            - [setCacheHandlerChain, [@s.cache.handler_chain]]
+            - [setCacheChain, [@s.cache.chain]]
 
     s.swim.renderer_caching_disabled:
         class: %s.swim.renderer_caching_enabled.class%

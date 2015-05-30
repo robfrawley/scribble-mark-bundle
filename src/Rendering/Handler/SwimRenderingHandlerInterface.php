@@ -12,7 +12,6 @@
 namespace Scribe\SwimBundle\Rendering\Handler;
 
 use Scribe\Component\DependencyInjection\Compiler\CompilerPassHandlerInterface;
-use Scribe\Component\DependencyInjection\Container\ContainerAwareInterface;
 use Scribe\MantleBundle\Templating\Generator\RendererInterface;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
 

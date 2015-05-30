@@ -42,7 +42,7 @@ class SwimBootstrapColumnHandler extends AbstractSwimRenderingHandler
 
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
-                $original    = $matches[0][$i];
+                $original = $matches[0][$i];
                 if (empty($matches[1][$i]) && $matches[1][$i] != 0) {
                     $col_span = 12;
                 } else {

@@ -58,10 +58,10 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
                 $original = $matches[0][$i];
-                $title    = $matches[1][$i];
-                $target   = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace  = '<div class="collapse-single_'.$target.' collapsable collapse">';
-                $string   = str_replace($original, $replace, $string);
+                $title = $matches[1][$i];
+                $target = StringFilter::alphanumericOnly($matches[1][$i]);
+                $replace = '<div class="collapse-single_'.$target.' collapsable collapse">';
+                $string = str_replace($original, $replace, $string);
             }
         }
 
@@ -70,8 +70,8 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
                 $original = $matches[0][$i];
-                $title    = $matches[1][$i];
-                $target   = StringFilter::alphanumericOnly($matches[1][$i]);
+                $title = $matches[1][$i];
+                $target = StringFilter::alphanumericOnly($matches[1][$i]);
                 $replace = '<span class="collapsable-toggle collapsed" data-toggle="collapse" data-target=".collapse-single_'.$target.'"><span class="icon-for-open icon-chevron-sign-up icon-fixed-width"> </span><span class="icon-for-closed icon-chevron-sign-down icon-fixed-width"> </span>'.$title.'</span>';
                 $string = str_replace($original, $replace, $string);
             }
@@ -94,10 +94,10 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
                 $original = $matches[0][$i];
-                $title    = $matches[1][$i];
-                $target   = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace  = '<div id="T_'.$target.'" class="collapsable collapse in">';
-                $string   = str_replace($original, $replace, $string);
+                $title = $matches[1][$i];
+                $target = StringFilter::alphanumericOnly($matches[1][$i]);
+                $replace = '<div id="T_'.$target.'" class="collapsable collapse in">';
+                $string = str_replace($original, $replace, $string);
             }
         }
 
@@ -106,10 +106,10 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
                 $original = $matches[0][$i];
-                $title    = $matches[1][$i];
-                $target   = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace  = '<div id="T_'.$target.'" class="collapsable collapse">';
-                $string   = str_replace($original, $replace, $string);
+                $title = $matches[1][$i];
+                $target = StringFilter::alphanumericOnly($matches[1][$i]);
+                $replace = '<div id="T_'.$target.'" class="collapsable collapse">';
+                $string = str_replace($original, $replace, $string);
             }
         }
 
@@ -118,8 +118,8 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
                 $original = $matches[0][$i];
-                $title    = $matches[1][$i];
-                $target   = StringFilter::alphanumericOnly($matches[1][$i]);
+                $title = $matches[1][$i];
+                $target = StringFilter::alphanumericOnly($matches[1][$i]);
                 $replace = '<span class="collapsable-toggle collapsed" data-toggle="collapse" data-target="#T_'.$target.'">'.$title.'</span>';
                 $string = str_replace($original, $replace, $string);
             }

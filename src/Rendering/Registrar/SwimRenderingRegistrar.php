@@ -92,7 +92,7 @@ class SwimRenderingRegistrar extends AbstractCompilerPassChain implements SwimRe
             return false;
         }
 
-        return (bool) (! (null !== $value && $extra[(string) $key] !== $value));
+        return (bool) (!(null !== $value && $extra[(string) $key] !== $value));
     }
 
     /**

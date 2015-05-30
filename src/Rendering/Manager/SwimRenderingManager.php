@@ -169,7 +169,7 @@ class SwimRenderingManager implements SwimRenderingManagerInterface
             return $this->attributes[(string) $key];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -184,8 +184,7 @@ class SwimRenderingManager implements SwimRenderingManagerInterface
         $this->setOriginal($string);
         $this->setWork($string);
 
-        foreach ($this->registrar->getHandlerCollection() as $handler)
-        {
+        foreach ($this->registrar->getHandlerCollection() as $handler) {
             $this->setWork(
                 $handler->render($this->getWork())
             );

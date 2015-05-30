@@ -12,7 +12,6 @@
 namespace Scribe\SwimBundle\Templating\Generator\Node\Rendering;
 
 use Scribe\MantleBundle\Templating\Generator\Node\Rendering\AbstractNodeRenderer;
-use Scribe\SwimBundle\Component\Parser\SwimParserChain;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManager;
 use Scribe\Utility\ClassInfo;
 
@@ -62,7 +61,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Gets the value of swim
+     * Gets the value of swim.
      *
      * @return SwimRenderingManager
      */
@@ -72,7 +71,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Sets the value of swim
+     * Sets the value of swim.
      *
      * @param SwimRenderingManager $manager
      *
@@ -101,7 +100,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
         ;
         $this->setNodeParsed($rendered);
 
-        $nodeToc         = $this
+        $nodeToc = $this
             ->getSwim()
             ->getAttribute('toc_html')
         ;
@@ -127,7 +126,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Gets the value of nodeParsed
+     * Gets the value of nodeParsed.
      *
      * @return string
      */
@@ -137,7 +136,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Sets the value of nodeParsed
+     * Sets the value of nodeParsed.
      *
      * @param string $nodeParsed description
      *
@@ -151,7 +150,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Gets the value of nodeToc
+     * Gets the value of nodeToc.
      *
      * @return string
      */
@@ -161,7 +160,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Sets the value of nodeToc
+     * Sets the value of nodeToc.
      *
      * @param string $nodeToc description
      *
@@ -175,7 +174,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Gets the value of nodeIndex
+     * Gets the value of nodeIndex.
      *
      * @return string
      */
@@ -185,7 +184,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Sets the value of nodeIndex
+     * Sets the value of nodeIndex.
      *
      * @param string $nodeIndex description
      *
@@ -199,7 +198,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Gets the value of nodeIndexLevels
+     * Gets the value of nodeIndexLevels.
      *
      * @return string
      */
@@ -209,7 +208,7 @@ class NodeRendererSwim extends AbstractNodeRenderer
     }
 
     /**
-     * Sets the value of nodeIndexLevels
+     * Sets the value of nodeIndexLevels.
      *
      * @param string $nodeIndexLevels description
      *

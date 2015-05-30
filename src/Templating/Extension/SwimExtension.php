@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Scribe World Application.
  *
@@ -14,7 +15,7 @@ use Scribe\MantleBundle\Templating\Twig\AbstractTwigExtension;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
 
 /**
- * SwimExtension
+ * SwimExtension.
  */
 class SwimExtension extends AbstractTwigExtension
 {
@@ -81,7 +82,6 @@ class SwimExtension extends AbstractTwigExtension
     public function swimBlog($content)
     {
         return $this->manager->render($content);
-
     }
 
     /**
@@ -92,6 +92,5 @@ class SwimExtension extends AbstractTwigExtension
     public function swimBook($content)
     {
         return $this->manager->render($content);
-
     }
 }

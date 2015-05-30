@@ -12,7 +12,7 @@
 namespace Scribe\SwimBundle\Rendering\Handler;
 
 /**
- * Class SwimBootstrapTableFeelHandler
+ * Class SwimBootstrapTableFeelHandler.
  */
 class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
 {
@@ -38,6 +38,7 @@ class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
 
         if ($config_cols === null || $config_size === null || $search === null) {
             $this->stopwatchStop($this->getType());
+
             return $string;
         }
 
@@ -50,10 +51,10 @@ class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
     }
 
     /**
-     * remove the config declaration from the file contents
+     * remove the config declaration from the file contents.
      *
-     * @param  string $content passed by reference
-     * @param  string $search
+     * @param string $content passed by reference
+     * @param string $search
      */
     private function removeConfigFromContent(&$content, $search)
     {
@@ -61,9 +62,10 @@ class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
     }
 
     /**
-     * check for and get the configuration defined in the content
+     * check for and get the configuration defined in the content.
      *
-     * @param  string|null $content
+     * @param string|null $content
+     *
      * @return array
      */
     private function getConfig($content = null)
@@ -72,11 +74,13 @@ class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
         $matches = [];
         @preg_match_all($pattern, $content, $matches);
 
-        if (count($matches[0]) < 1) { return [null, null, null]; }
+        if (count($matches[0]) < 1) {
+            return [null, null, null];
+        }
 
         $config_cols = array_pop($matches[1]);
         $config_size = array_pop($matches[2]);
-        $search      = array_pop($matches[0]);
+        $search = array_pop($matches[0]);
 
         return [
             $config_cols,
@@ -86,11 +90,11 @@ class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
     }
 
     /**
-     * handle setting column widths for the tables
+     * handle setting column widths for the tables.
      *
-     * @param  string $content     passed by reference
-     * @param  int    $config_cols
-     * @param  string $config_size
+     * @param string $content     passed by reference
+     * @param int    $config_cols
+     * @param string $config_size
      */
     private function handleTableFeel(&$content, $config_cols, $config_size)
     {
@@ -116,7 +120,7 @@ class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
             foreach (range(1, $config_cols) as $j) {
                 if (!in_array($matches[$j][$i], $strSearch)) {
                     $strSearch[] = $matches[$j][$i];
-                    $strReplace[] = str_ireplace('<th>', '<th width="'.$config_sizes[$j-1].'%">', $matches[$j][$i]);
+                    $strReplace[] = str_ireplace('<th>', '<th width="'.$config_sizes[$j - 1].'%">', $matches[$j][$i]);
                 }
             }
         }

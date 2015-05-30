@@ -79,7 +79,7 @@ class ScribeSwimBundleTest extends PHPUnit_Framework_TestCase
 
     public function removeDirectoryRecursive($path)
     {
-        $files = glob($path . '/*');
+        $files = glob($path.'/*');
 
         foreach ($files as $file) {
             is_dir($file) ? $this->removeDirectoryRecursive($file) : unlink($file);

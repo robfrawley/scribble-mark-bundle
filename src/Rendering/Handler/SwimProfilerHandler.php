@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Scribe World Application.
  *
@@ -11,7 +12,7 @@
 namespace Scribe\SwimBundle\Rendering\Handler;
 
 /**
- * SwimProfilerHandler
+ * SwimProfilerHandler.
  */
 class SwimProfilerHandler extends AbstractSwimRenderingHandler
 {
@@ -24,7 +25,7 @@ class SwimProfilerHandler extends AbstractSwimRenderingHandler
     }
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $firstPass = true;
 
@@ -48,6 +49,7 @@ class SwimProfilerHandler extends AbstractSwimRenderingHandler
     {
         if ($this->firstPass === true) {
             $this->firstPass = false;
+
             return $this->firstPass($string);
         } else {
             return $this->secondPass($string);
@@ -56,6 +58,7 @@ class SwimProfilerHandler extends AbstractSwimRenderingHandler
 
     /**
      * @param string $string
+     *
      * @return string
      */
     public function firstPass($string = null)
@@ -67,6 +70,7 @@ class SwimProfilerHandler extends AbstractSwimRenderingHandler
 
     /**
      * @param string $string
+     *
      * @return string
      */
     public function secondPass($string = null)

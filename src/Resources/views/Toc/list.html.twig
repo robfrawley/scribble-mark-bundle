@@ -3,7 +3,7 @@
 		<li>
 			<a href="#{{ item['id'] }}">{{ item['text']|raw }}</a>
 			{% if item['subs']|length > 0 %}
-				{% include 'ScribeSwimBundle:Toc:list.html.twig' with {'toc_heads': item['subs'], prev: prev ~ index} only %} 
+				{% include 'ScribeSwimBundle:Toc:list.html.twig' with {'toc_heads': item['subs'], prev: prev ~ index} only %}
 			{% endif %}
 		</li>
 	{% endfor %}

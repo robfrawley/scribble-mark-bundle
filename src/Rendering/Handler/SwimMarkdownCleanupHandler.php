@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Scribe World Application.
  *
@@ -11,7 +12,7 @@
 namespace Scribe\SwimBundle\Rendering\Handler;
 
 /**
- * Class SwimMarkdownCleanupHandler
+ * Class SwimMarkdownCleanupHandler.
  */
 class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
 {
@@ -35,7 +36,7 @@ class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
 
         @preg_match_all('#<p>(</.*>)</p>#i', $string, $matches);
         if (0 < count($matches[0])) {
-            for ($i=0; $i<count($matches[0]); $i++) {
+            for ($i = 0; $i < count($matches[0]); $i++) {
                 $string = str_ireplace($matches[0][$i], $matches[1][$i], $string);
             }
         }
@@ -43,7 +44,7 @@ class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
         $matches = [];
         @preg_match_all('#<p></p>#i', $string, $matches);
         if (0 < count($matches[0])) {
-            for ($i=0; $i<count($matches[0]); $i++) {
+            for ($i = 0; $i < count($matches[0]); $i++) {
                 $string = str_ireplace($matches[0][$i], $matches[1][$i], $string);
             }
         }
@@ -51,7 +52,7 @@ class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
         $matches = [];
         @preg_match_all('#<p>(<div id="T_.*?" class=".*?collapse.*?">)</p>#i', $string, $matches);
         if (0 < count($matches[0])) {
-            for ($i=0; $i<count($matches[0]); $i++) {
+            for ($i = 0; $i < count($matches[0]); $i++) {
                 $string = str_ireplace($matches[0][$i], $matches[1][$i], $string);
             }
         }

@@ -46,7 +46,7 @@ class SwimRenderingManagerTest extends AbstractMantleKernelTestCase
         $rand1 = mt_rand(10000, 40000);
         $rand2 = mt_rand(50000, 100000);
 
-        $swim = "# Header 1\n\nRandom number: ".$rand1.".\n\n## Header 2\n\nRandom number: ".$rand2.".";
+        $swim = "# Header 1\n\nRandom number: ".$rand1.".\n\n## Header 2\n\nRandom number: ".$rand2.'.';
         $expected = '<h1 id="anchor-header1">Header 1</h1>
 <p>Random number: '.$rand1.'.</p>
 <h2 id="anchor-header2">Header 2</h2>
