@@ -62,7 +62,7 @@ class SwimBlockExcludesHandler extends AbstractSwimRenderingHandler
      */
     public function excludedBlocksRemove(&$string)
     {
-        if ((false === preg_match_all('#{~ex:start}((.*?\n?)*?){~ex:end}#i', $string, $matches)) &&
+        if ((false === preg_match_all('#{~verbatim}((.*?\n?)*?){~verbatim:end}#i', $string, $matches)) &&
             (false === is_array($matches) || 2 !== count($matches) || 0 === count($matches[0]))) {
             return;
         }
