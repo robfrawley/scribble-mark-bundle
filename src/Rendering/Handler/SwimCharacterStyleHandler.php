@@ -63,6 +63,14 @@ class SwimCharacterStyleHandler extends AbstractSwimRenderingHandler
             }
         }
 
+        @preg_match_all('#{~scml-tag:([^}]*)}#i', $string, $matches);
+        if (0 < count($matches[0])) {
+            for ($i=0; $i<count($matches[0]); $i++) {
+                $replace = '<span class="scml-tag">&lt;<span class="scml">'.$matches[1][$i].'</span>&gt;</span>';
+                $string = str_ireplace($matches[0][$i], $replace, $string);
+            }
+        }
+
         @preg_match_all('#{~app-menu:([^}]*)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {

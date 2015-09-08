@@ -45,7 +45,7 @@ class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
         @preg_match_all('#<p></p>#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
-                $string = str_ireplace($matches[0][$i], $matches[1][$i], $string);
+                $string = str_ireplace($matches[0][$i], '', $string);
             }
         }
 

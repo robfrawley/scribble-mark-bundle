@@ -51,7 +51,7 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
      */
     private function doSingleCollapses($string = '')
     {
-        $string = str_ireplace('{~collapse-single:end}', '</div>', $string);
+        $string = str_ireplace('{~collapse-single:end}', '', $string);
 
         $matches = [];
         @preg_match_all('#{~collapse-single:start:(.*?)}#i', $string, $matches);
@@ -60,7 +60,7 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
                 $original = $matches[0][$i];
                 $title = $matches[1][$i];
                 $target = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace = '<div class="collapse-single_'.$target.' collapsable collapse">';
+                $replace = '';
                 $string = str_replace($original, $replace, $string);
             }
         }
@@ -72,7 +72,7 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
                 $original = $matches[0][$i];
                 $title = $matches[1][$i];
                 $target = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace = '<span class="collapsable-toggle collapsed" data-toggle="collapse" data-target=".collapse-single_'.$target.'"><span class="icon-for-open icon-chevron-sign-up icon-fixed-width"> </span><span class="icon-for-closed icon-chevron-sign-down icon-fixed-width"> </span>'.$title.'</span>';
+                $replace = $title;
                 $string = str_replace($original, $replace, $string);
             }
         }
@@ -87,7 +87,7 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
      */
     private function doIndependentCollapses($string = '')
     {
-        $string = str_ireplace('{~collapse:end}', '</div>', $string);
+        $string = str_ireplace('{~collapse:end}', '', $string);
 
         $matches = [];
         @preg_match_all('#{~collapse:start:open:(.*?)}#i', $string, $matches);
@@ -96,7 +96,7 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
                 $original = $matches[0][$i];
                 $title = $matches[1][$i];
                 $target = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace = '<div id="T_'.$target.'" class="collapsable collapse in">';
+                $replace = '';
                 $string = str_replace($original, $replace, $string);
             }
         }
@@ -108,7 +108,7 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
                 $original = $matches[0][$i];
                 $title = $matches[1][$i];
                 $target = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace = '<div id="T_'.$target.'" class="collapsable collapse">';
+                $replace = '';
                 $string = str_replace($original, $replace, $string);
             }
         }
@@ -120,7 +120,7 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
                 $original = $matches[0][$i];
                 $title = $matches[1][$i];
                 $target = StringFilter::alphanumericOnly($matches[1][$i]);
-                $replace = '<span class="collapsable-toggle collapsed" data-toggle="collapse" data-target="#T_'.$target.'">'.$title.'</span>';
+                $replace = $title;
                 $string = str_replace($original, $replace, $string);
             }
         }
