@@ -32,8 +32,6 @@ class SwimLinkWikipediaHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         @preg_match_all('#{~wiki:([^ ]*?)( (.*?))?}#i', $string, $nodeWikiMatches);
         if (0 < count($nodeWikiMatches[0])) {
             for ($i = 0; $i < count($nodeWikiMatches[0]); $i++) {
@@ -45,8 +43,6 @@ class SwimLinkWikipediaHandler extends AbstractSwimRenderingHandler
                 $string = str_replace($original, $replace, $string);
             }
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

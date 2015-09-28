@@ -11,8 +11,7 @@
 
 namespace Scribe\SwimBundle\Rendering\Manager;
 
-use Scribe\SwimBundle\Rendering\Registrar\SwimRenderingRegistrar;
-use Scribe\SwimBundle\Rendering\Registrar\SwimRenderingRegistrarInterface;
+use Scribe\SwimBundle\DependencyInjection\Compiler\Registrar\RendererCompilerRegistrar;
 
 /**
  * Class SwimRenderingManager.
@@ -47,7 +46,7 @@ class SwimRenderingManager implements SwimRenderingManagerInterface
     /**
      * @param SwimRenderingRegistrarInterface $registrar
      */
-    public function __construct(SwimRenderingRegistrarInterface $registrar)
+    public function __construct(RendererCompilerRegistrar $registrar)
     {
         $this->registrar = $registrar;
     }
@@ -184,14 +183,9 @@ class SwimRenderingManager implements SwimRenderingManagerInterface
         $this->setOriginal($string);
         $this->setWork($string);
 
-        foreach ($this->registrar->getHandlerCollection() as $handler) {
-            $this->setWork(
-                $handler->render($this->getWork())
-            );
-
-            $this->addAttributes(
-                (array) $handler->getAttributes()
-            );
+        foreach ($this->registrar as $r) {
+            $this->setWork($r->render($this->getWork()));
+            $this->addAttributes((array) $r->getAttributes());
         }
 
         $this->setDone($this->getWork());

@@ -32,20 +32,14 @@ class SwimBootstrapTableLookHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         list($config, $search) = $this->getConfig($string);
 
         if ($config === null || $search === null) {
-            $this->stopwatchStop($this->getType());
-
             return $string;
         }
 
         $this->removeConfigFromContent($string, $search);
         $this->handleTableLook($string, $config);
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

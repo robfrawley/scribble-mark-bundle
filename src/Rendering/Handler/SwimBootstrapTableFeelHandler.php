@@ -32,20 +32,14 @@ class SwimBootstrapTableFeelHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         list($config_cols, $config_size, $search) = $this->getConfig($string);
 
         if ($config_cols === null || $config_size === null || $search === null) {
-            $this->stopwatchStop($this->getType());
-
             return $string;
         }
 
         $this->removeConfigFromContent($string, $search);
         $this->handleTableFeel($string, $config_cols, $config_size);
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

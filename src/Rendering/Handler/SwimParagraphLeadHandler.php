@@ -32,8 +32,6 @@ class SwimParagraphLeadHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         @preg_match_all('#<([^>])>\*\*\*\*(.*)</(\1)>#i', $string, $matches);
         if (0 < count($matches)) {
             for ($i = 0; $i < count($matches[0]); $i++) {
@@ -49,8 +47,6 @@ class SwimParagraphLeadHandler extends AbstractSwimRenderingHandler
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

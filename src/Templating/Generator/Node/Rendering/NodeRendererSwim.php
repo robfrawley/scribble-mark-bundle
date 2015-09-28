@@ -13,7 +13,7 @@ namespace Scribe\SwimBundle\Templating\Generator\Node\Rendering;
 
 use Scribe\MantleBundle\Templating\Generator\Node\Rendering\AbstractNodeRenderer;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManager;
-use Scribe\Utility\ClassInfo;
+use Scribe\Wonka\Utility\ClassInfo;
 
 /**
  * Class NodeRendererSwim.

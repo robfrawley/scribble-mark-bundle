@@ -11,10 +11,8 @@
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Scribe\SecurityBundle\Entity\OrgRepository;
 
 /**
  * Class SwimBlockRestrictionsHandler.
@@ -41,12 +39,13 @@ class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
      * @param TokenStorageInterface               $tokenStorage
      * @param OrgRepository|EntityRepository|null $orgRepo
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage,
-                                EntityRepository $orgRepo = null)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, $orgRepo = null)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->orgRepo = $orgRepo;
+
+        parent::__construct();
     }
 
     /**
@@ -65,8 +64,6 @@ class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $this->handleBlockRestrictions(
             $string,
             '#{~block:(.*?)}((.*\n)*?){~block:end}#i',
@@ -74,16 +71,14 @@ class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
         );
         $this->handleBlockRestrictions(
             $string,
-            '#{~restrict:by_org:(.*?)}((.*\n)*?){~block:end}#i',
+            '#{~restrict:org:(.*?)}((.*\n)*?){~block:end}#i',
             [$this, 'isOrgRestrictionMet']
         );
         $this->handleBlockRestrictions(
             $string,
-            '#{~restrict:by_role:(.*?)}((.*\n)*?){~block:end}#i',
+            '#{~restrict:role:(.*?)}((.*\n)*?){~block:end}#i',
             [$this, 'isRoleRestrictionMet']
         );
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

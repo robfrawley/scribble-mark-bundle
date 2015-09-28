@@ -11,7 +11,7 @@
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
-use Scribe\Utility\Filter\StringFilter;
+use Scribe\Wonka\Utility\Filter\StringFilter;
 
 /**
  * Class SwimBootstrapCollapseHandler.
@@ -34,12 +34,8 @@ class SwimBootstrapCollapseHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $string = $this->doIndependentCollapses($string);
         $string = $this->doSingleCollapses($string);
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

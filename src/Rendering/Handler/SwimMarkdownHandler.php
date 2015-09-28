@@ -45,11 +45,7 @@ class SwimMarkdownHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $string = $this->parsedown->text($string);
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

@@ -32,8 +32,6 @@ class SwimBootstrapTooltipHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         @preg_match_all('#{~tt:(.*?) (.*?)}#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
@@ -41,8 +39,6 @@ class SwimBootstrapTooltipHandler extends AbstractSwimRenderingHandler
                 $string = str_ireplace($matches[0][$i], $replace, $string);
             }
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

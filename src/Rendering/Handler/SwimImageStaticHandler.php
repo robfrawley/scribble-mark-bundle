@@ -32,8 +32,6 @@ class SwimImageStaticHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $matches = [];
         @preg_match_all('#{~image:([^\s]*?)(\s(.*?))?}#i', $string, $matches);
 
@@ -51,8 +49,6 @@ class SwimImageStaticHandler extends AbstractSwimRenderingHandler
                 $string = str_replace($original, $replace, $string);
             }
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

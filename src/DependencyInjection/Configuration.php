@@ -12,12 +12,12 @@
 namespace Scribe\SwimBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Scribe\WonkaBundle\Component\DependencyInjection\AbstractConfiguration;
 
 /**
  * Class Configuration.
  */
-class Configuration implements ConfigurationInterface
+class Configuration extends AbstractConfiguration
 {
     /**
      * Create the config tree builder object.
@@ -26,18 +26,18 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('scribe_swim');
-
-        $rootNode
+        $this
+            ->getBuilderRoot()
+            ->getNodeBuilder()
             ->children()
                 ->append($this->getCachingNode())
                 ->append($this->getFeatureNode())
                 ->append($this->getBlacklistNode())
-            ->end()
-        ;
+            ->end();
 
-        return $treeBuilder;
+        return $this
+            ->getBuilderRoot()
+            ->getTreeBuilder();
     }
 
     /**
@@ -47,8 +47,9 @@ class Configuration implements ConfigurationInterface
      */
     private function getCachingNode()
     {
-        return (new TreeBuilder())
-            ->root('caching')
+        return $this
+            ->getBuilder('caching')
+            ->getNodeBuilder()
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('enabled')
@@ -82,14 +83,14 @@ class Configuration implements ConfigurationInterface
                         'three hours, or 10800 seconds.'
                     )
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function getFeatureNode()
     {
-        return (new TreeBuilder())
-            ->root('feature_matrix')
+        return $this
+            ->getBuilder('feature_matrix')
+            ->getNodeBuilder()
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('block_excludes')
@@ -131,14 +132,14 @@ class Configuration implements ConfigurationInterface
                     ->defaultTrue()
                     ->info('Enables or disables a collection of Bootstrap-specific renderers.')
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function getBlacklistNode()
     {
-        return (new TreeBuilder())
-            ->root('blacklist')
+        return $this
+            ->getBuilder('blacklist')
+            ->getNodeBuilder()
             ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('rendering_handlers')
@@ -146,8 +147,7 @@ class Configuration implements ConfigurationInterface
                     ->info('List of renderer steps to blacklist (they will not be registered with the renderer chain and therefore will not run.')
                     ->prototype('scalar')->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 }
 

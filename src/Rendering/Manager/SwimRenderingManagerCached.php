@@ -11,14 +11,14 @@
 
 namespace Scribe\SwimBundle\Rendering\Manager;
 
-use Scribe\CacheBundle\DependencyInjection\Aware\CacheChainAwareTrait;
+use Scribe\CacheBundle\DependencyInjection\Aware\CacheManagerAwareTrait;
 
 /**
  * Class SwimRenderingManagerCached.
  */
 class SwimRenderingManagerCached extends SwimRenderingManager
 {
-    use CacheChainAwareTrait;
+    use CacheManagerAwareTrait;
 
     /**
      * @param string $string
@@ -28,7 +28,7 @@ class SwimRenderingManagerCached extends SwimRenderingManager
      */
     public function render($string, $name = null)
     {
-        if (null === ($cachedContent = $this->getCacheChain()->get($string))) {
+        if (null === ($cachedContent = $this->getCache()->get($string))) {
             parent::render($string, $name);
 
             $cachedContent = [
@@ -36,7 +36,7 @@ class SwimRenderingManagerCached extends SwimRenderingManager
                 'attributes' => (array) $this->getAttributes(),
             ];
 
-            $this->getCacheChain()->set($cachedContent, $string);
+            $this->getCache()->set($cachedContent, $string);
         } else {
             $this->setOriginal(null);
             $this->setWork(null);

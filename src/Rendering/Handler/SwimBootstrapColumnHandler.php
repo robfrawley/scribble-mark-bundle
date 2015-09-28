@@ -32,8 +32,6 @@ class SwimBootstrapColumnHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $string = str_ireplace('{~row:start}', '<div class="row">', $string);
         $string = str_ireplace('{~row:end}', '</div>', $string);
 
@@ -56,8 +54,6 @@ class SwimBootstrapColumnHandler extends AbstractSwimRenderingHandler
         if (count($matches) > 0) {
             $string = str_ireplace('{~col:end}', '</div>', $string);
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

@@ -11,12 +11,12 @@
 
 namespace Scribe\SwimBundle\Tests\Rendering\Manager;
 
-use Scribe\Utility\UnitTest\AbstractMantleKernelTestCase;
+use Scribe\WonkaBundle\Utility\TestCase\KernelTestCase;
 
 /**
  * Class SwimRenderingManagerTest.
  */
-class SwimRenderingManagerTest extends AbstractMantleKernelTestCase
+class SwimRenderingManagerTest extends KernelTestCase
 {
     public function testSwimManagerInstance()
     {

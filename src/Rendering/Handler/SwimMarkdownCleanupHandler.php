@@ -32,8 +32,6 @@ class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         @preg_match_all('#<p>(</.*>)</p>#i', $string, $matches);
         if (0 < count($matches[0])) {
             for ($i = 0; $i < count($matches[0]); $i++) {
@@ -56,8 +54,6 @@ class SwimMarkdownCleanupHandler extends AbstractSwimRenderingHandler
                 $string = str_ireplace($matches[0][$i], $matches[1][$i], $string);
             }
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

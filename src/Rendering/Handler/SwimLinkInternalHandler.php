@@ -48,12 +48,8 @@ class SwimLinkInternalHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $work = $this->renderLinks($string);
         $work = $this->renderPaths($work);
-
-        $this->stopwatchStop($this->getType());
 
         return $work;
     }

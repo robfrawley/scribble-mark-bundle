@@ -45,11 +45,7 @@ class SwimBootstrapCallOutHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $this->renderCallOutBlocks($string);
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

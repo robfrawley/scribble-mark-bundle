@@ -11,17 +11,15 @@
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
-use Scribe\Component\DependencyInjection\Aware\StopwatchActionsAwareTrait;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
-use Scribe\Utility\ClassInfo;
+use Scribe\Wonka\Utility\ClassInfo;
+use Scribe\WonkaBundle\Component\DependencyInjection\Compiler\Attendant\AbstractCompilerAttendant;
 
 /**
  * Class AbstractSwimRenderingHandler.
  */
-abstract class AbstractSwimRenderingHandler implements SwimRenderingHandlerInterface
+abstract class AbstractSwimRenderingHandler extends AbstractCompilerAttendant implements SwimRenderingHandlerInterface
 {
-    use StopwatchActionsAwareTrait;
-
     /**
      * @var array
      */

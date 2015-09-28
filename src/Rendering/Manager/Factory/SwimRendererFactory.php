@@ -11,7 +11,7 @@
 
 namespace Scribe\SwimBundle\Rendering\Manager\Factory;
 
-use Scribe\Component\DependencyInjection\Container\ServiceFinder;
+use Scribe\WonkaBundle\Component\DependencyInjection\Container\ServiceFinder;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
 
 /**

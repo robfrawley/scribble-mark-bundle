@@ -47,16 +47,12 @@ class SwimTableOfContentsHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         list($string, $toc_html, $toc_levels) = $this->buildToc($string);
 
         $this->addAttributes([
             'toc_html' => $toc_html,
             'toc_levels' => $toc_levels,
         ]);
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

@@ -11,7 +11,7 @@
 
 namespace Scribe\SwimBundle\Templating\Extension;
 
-use Scribe\MantleBundle\Templating\Twig\AbstractTwigExtension;
+use Scribe\WonkaBundle\Component\Templating\AbstractTwigExtension;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
 
 /**

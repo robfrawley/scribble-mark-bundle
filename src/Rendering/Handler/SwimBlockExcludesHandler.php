@@ -42,8 +42,6 @@ class SwimBlockExcludesHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         $this->handlerPassCount++;
 
         if ($this->handlerPassCount % 2 !== 0) {
@@ -51,8 +49,6 @@ class SwimBlockExcludesHandler extends AbstractSwimRenderingHandler
         } else {
             $this->excludedBlocksAdd($string);
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

@@ -11,14 +11,13 @@
 
 namespace Scribe\SwimBundle\Rendering\Handler;
 
-use Scribe\Component\DependencyInjection\Compiler\CompilerPassHandlerInterface;
-use Scribe\MantleBundle\Templating\Generator\RendererInterface;
 use Scribe\SwimBundle\Rendering\Manager\SwimRenderingManagerInterface;
+use Scribe\WonkaBundle\Component\DependencyInjection\Compiler\Attendant\CompilerAttendantInterface;
 
 /**
  * Class SwimRendererHandlerInterface.
  */
-interface SwimRenderingHandlerInterface extends RendererInterface, CompilerPassHandlerInterface
+interface SwimRenderingHandlerInterface extends CompilerAttendantInterface
 {
     /**
      * @var string

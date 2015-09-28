@@ -11,25 +11,22 @@
 
 namespace Scribe\SwimBundle;
 
-use Scribe\SwimBundle\DependencyInjection\Compiler\SwimRendererCompilerPass;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Scribe\SwimBundle\DependencyInjection\Compiler\Pass\RendererCompilerPass;
+use Scribe\WonkaBundle\Component\Bundle\AbstractCompilerAwareBundle;
 
 /**
  * Class ScribeSwimBundle.
  */
-class ScribeSwimBundle extends Bundle
+class ScribeSwimBundle extends AbstractCompilerAwareBundle
 {
     /**
-     * Build the container for Swim bundle!
-     *
-     * @param ContainerBuilder $container
+     * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function getCompilerPassInstances()
     {
-        parent::build($container);
-
-        $container->addCompilerPass(new SwimRendererCompilerPass());
+        return [
+            new RendererCompilerPass(),
+        ];
     }
 }
 

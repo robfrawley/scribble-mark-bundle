@@ -32,8 +32,6 @@ class SwimLinkExternalHandler extends AbstractSwimRenderingHandler
      */
     public function render($string, array $args = [])
     {
-        $this->stopwatchStart($this->getType(), 'Swim');
-
         @preg_match_all('#{~a:([^ ]*?)( (.*?))?}#i', $string, $nodeAMatches);
         if (0 < count($nodeAMatches[0])) {
             for ($i = 0; $i < count($nodeAMatches[0]); $i++) {
@@ -76,8 +74,6 @@ class SwimLinkExternalHandler extends AbstractSwimRenderingHandler
                 $string = str_replace($original, $replace, $string);
             }
         }
-
-        $this->stopwatchStop($this->getType());
 
         return $string;
     }

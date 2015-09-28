@@ -55,13 +55,12 @@ class ScribeSwimBundleTest extends PHPUnit_Framework_TestCase
 
     public function testCanApplyCompilerPass()
     {
-        static::assertTrue(static::$container->has('s.swim.renderer_chain.registrar'));
+        static::assertTrue(static::$container->has('s.swim.renderer_registrar'));
 
-        $methodChain = static::$container->get('s.swim.renderer_chain.registrar');
+        $r = static::$container->get('s.swim.renderer_registrar');
 
-        static::assertNotEquals([], $methodChain->getHandlerCollection());
-        static::assertTrue($methodChain->hasHandlerCollection());
-        static::assertEquals(20, count($methodChain->getHandlerCollection()));
+        static::assertNotEquals([], $r->getAttendantCollection());
+        static::assertCount(20, $r);
     }
 
     public function tearDown()

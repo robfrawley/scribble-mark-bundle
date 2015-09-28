@@ -2,29 +2,16 @@
     "name"        : "scribe/swim-bundle",
     "license"     : "MIT",
     "type"        : "project",
-    "homepage"    : "https://scr.be/swim-bundle",
+    "homepage"    : "https://cache-bundle.oss.scr.be/home",
     "description" : "Simple and extensible parser library for markdown, Swim, and more...",
     "support" : {
         "email"  : "rmf@scr.be",
-        "issues" : "https://ScribeCacheBundle.docs.scribe.tools/issues",
-        "source" : "https://ScribeCacheBundle.docs.scribe.tools/git",
+        "issues" : "https://cache-bundle.oss.scr.be/issues",
+        "source" : "https://cache-bundle.oss.scr.be/git",
         "irc"    : "irc://irc.efnet.org/scribe"
     },
     "keywords"    : [
-        "scribe-cache-bundle",
-        "symfony-cache-bundle",
-        "mantle-cache",
-        "cache",
-        "bundle",
-        "symfony",
-        "symfony2",
-        "symfony-framework",
-        "scribe",
-        "scr",
-        "scribenet",
-        "scribeinc",
-        "scribe-software",
-        "scribe-services"
+        "swim-bundle", "scribe-swim-bundle", "swim", "markdown", "symfony", "scribe", "scribenet"
     ],
     "authors"     : [
         {
@@ -41,39 +28,35 @@
         }
     ],
     "require" : {
-        "php"                                  : ">=5.6.4",
-        "scribe/mantle-bundle"                 : "~2.0|~2.1@dev",
-        "scribe/cache-bundle"                  : "~2.0|~2.1@dev",
-        "symfony/console"                      : "~2.7|~2.8@dev",
-        "symfony/dependency-injection"         : "~2.7|~2.8@dev",
-        "symfony/twig-bundle"                  : "~2.7|~2.8@dev",
-        "symfony/twig-bridge"                  : "~2.7|~2.8@dev",
-        "twig/twig"                            : "~1.18",
-        "erusev/parsedown"                     : "~1.5",
-        "erusev/parsedown-extra"               : "~0.7"
+        "php"                          : ">=5.6.4,~5.6",
+        "ext-memcached"                : "~2.2",
+        "scribe/wonka-library"         : "~0.1@dev",
+        "scribe/wonka-bundle"          : "~0.1@dev",
+        "scribe/cache-bundle"          : "~2.1@dev",
+        "symfony/dependency-injection" : "~2.7|~2.8@dev",
+        "erusev/parsedown"             : "~1.5",
+        "erusev/parsedown-extra"       : "~0.7"
     },
     "require-dev" : {
-        "ext-memcached"                        : "~2.2",
-        "ext-igbinary"                         : "~1.2",
-        "ext-tidy"                             : "~2.0",
-        "symfony/symfony"                      : "~2.7|~2.8@dev",
-        "symfony/stopwatch"                    : "~2.7|~2.8@dev",
-        "symfony/framework-bundle"             : "~2.7|~2.8@dev",
-        "symfony/phpunit-bridge"               : "~2.7|~2.8@dev",
-        "phpunit/phpunit"                      : "~4.6",
-        "sensio/generator-bundle"              : "~2.5",
-        "doctrine/orm"                         : "~2.5",
-        "doctrine/common"                      : "~2.5",
-        "doctrine/dbal"                        : "~2.5",
-        "doctrine/doctrine-bundle"             : "~1.4",
-        "doctrine/doctrine-fixtures-bundle"    : "2.2.*@dev",
-        "doctrine/data-fixtures"               : "1.0.*@dev",
-        "sensiolabs/security-checker"          : "~2.0",
-        "scrutinizer/ocular"                   : "~1.1",
-        "satooshi/php-coveralls"               : "*",
-        "chriskite/phactory"                   : "~0.4",
-        "sami/sami"                            : "~3.0",
-        "nikic/php-parser"                     : ">=1.0,<1.2"
+        "ext-igbinary"                : "~1.2",
+        "symfony/symfony"             : "~2.7|~2.8@dev",
+        "symfony/framework-bundle"    : "~2.7|~2.8@dev",
+        "symfony/monolog-bundle"      : "~2.7|~2.8@dev",
+        "symfony/stopwatch"           : "~2.7|~2.8@dev",
+        "symfony/var-dumper"          : "~2.7|~2.8@dev",
+        "symfony/debug-bundle"        : "~2.7|~2.8@dev",
+        "symfony/phpunit-bridge"      : "~2.7|~2.8@dev",
+        "phpunit/phpunit"             : "~4.8",
+        "sensiolabs/security-checker" : "~3.0",
+        "scrutinizer/ocular"          : "~1.1",
+        "satooshi/php-coveralls"      : "~0.6",
+        "chriskite/phactory"          : "~0.4",
+        "fzaninotto/faker"            : "~1.5",
+        "sami/sami"                   : "~3.0",
+        "nikic/php-parser"            : ">=1.0,<1.2"
+    },
+    "conflict" : {
+        "scribe/mantle-bundle" : "<2.1"
     },
     "autoload": {
         "psr-4": {
@@ -87,7 +70,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "2.1-dev"
         }
     }
 }
