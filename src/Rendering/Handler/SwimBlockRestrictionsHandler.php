@@ -69,7 +69,7 @@ class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
 
         $this->handleBlockRestrictions(
             $string,
-            '#{~block:(.*?)}((.*\n)*?){~block:end}#i',
+            '#\{\~block:(.*?)\}((.*\n)*?)\{\~block:end\}#i',
             [$this, 'isOrgRestrictionMet']
         );
         $this->handleBlockRestrictions(
@@ -96,7 +96,7 @@ class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
     private function handleBlockRestrictions(&$string, $regularExpression, callable $areRestrictionsMet)
     {
         if ((false === preg_match_all($regularExpression, $string, $matches)) ||
-            (false === is_array($matches) || 3 !== count($matches) || 0 === count($matches[0]))) {
+            (false === is_array($matches) || 0 === count($matches[0]))) {
             return;
         }
 
