@@ -101,16 +101,18 @@ class SwimBlockRestrictionsHandler extends AbstractSwimRenderingHandler
         }
 
         $matchesOriginalStr = $matches[0];
+        $matchesCleanedStr  = $matches[2];
         $matchesRestriction = $matches[1];
+        $matchesCount       = count($matchesOriginalStr) - 1;
 
-        foreach (range(0, count($matchesOriginalStr) - 1) as $i) {
+        foreach (range(0, $matchesCount) as $i) {
             $restrictionSet = (array) explode('|', $matchesRestriction[$i]);
 
             if (true === $areRestrictionsMet($restrictionSet)) {
-                continue;
+                $string = str_replace($matchesOriginalStr[$i], $matchesCleanedStr[$i], $string);
+            } else {
+                $string = str_replace($matchesOriginalStr[$i], '', $string);
             }
-
-            $string = str_replace($matchesOriginalStr[$i], '', $string);
         }
     }
 
